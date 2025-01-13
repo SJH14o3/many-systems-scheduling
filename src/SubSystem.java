@@ -1,6 +1,6 @@
 public abstract class SubSystem {
-    protected int intR1Remain;
-    protected int intR2Remain;
+    protected Integer intR1Remain;
+    protected Integer intR2Remain;
 
     public int getIntR1Remain() {
         return intR1Remain;
@@ -21,5 +21,15 @@ public abstract class SubSystem {
     public SubSystem(int intR1Remain, int intR2Remain) {
         this.intR1Remain = intR1Remain;
         this.intR2Remain = intR2Remain;
+    }
+
+    public boolean checkEnoughResource(Process process){
+        boolean out = false;
+        synchronized (intR1Remain){
+            if (intR1Remain >= process.getMaxR1() && intR2Remain >= process.getMaxR2()){
+                out = true;
+            }
+        }
+        return out;
     }
 }
