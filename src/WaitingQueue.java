@@ -45,6 +45,7 @@ public class WaitingQueue {
                 assert temp != null;
             } while (!owner.checkEnoughResource(temp));
         }
+        queue.remove(temp);
         return temp;
     }
 }
