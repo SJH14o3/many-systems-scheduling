@@ -1,6 +1,15 @@
-public abstract class SubSystem implements Runnable{
+public abstract class SubSystem extends Thread{
     protected Integer intR1Remain;
     protected Integer intR2Remain;
+
+    protected MainSystem owner;
+
+    protected int systemState;
+    protected int systemIndex;
+
+    public static final int STATE_RUNNING = 1;
+    public static final int STATE_FINISHED = 2;
+    public static final int STATE_FINISH_REGISTERED = 3;
 
     public int getIntR1Remain() {
         return intR1Remain;
@@ -18,9 +27,22 @@ public abstract class SubSystem implements Runnable{
         this.intR2Remain = intR2Remain;
     }
 
+    public int getSystemState() {
+        return systemState;
+    }
+
+    public void setSystemState(int systemState) {
+        this.systemState = systemState;
+    }
+
+    public void setOwner(MainSystem instance) {
+        owner = instance;
+    }
+
     public SubSystem(int intR1Remain, int intR2Remain) {
         this.intR1Remain = intR1Remain;
         this.intR2Remain = intR2Remain;
+        systemState = 1;
     }
 
     // must be synchronized before call this function

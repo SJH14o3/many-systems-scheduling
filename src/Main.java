@@ -42,5 +42,13 @@ public class Main {
         system3 = new SubSystem3(resources[2][0], resources[2][1]);
         SubSystem[] subSystems = {system1, system2, system3};
         MainSystem mainSystem = new MainSystem(subSystems);
+        for (int i = 0; i < subSystems.length; i++) {
+            subSystems[i].setOwner(mainSystem);
+        }
+        try {
+            mainSystem.start();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
