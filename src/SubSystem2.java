@@ -15,7 +15,11 @@ public final class SubSystem2 extends SubSystem {
 
     public SubSystem2(int intR1Remain, int intR2Remain, ProcessSubSystem2[] processes) {
         super(intR1Remain, intR2Remain);
+        this.processes = processes;
     }
+
+
+
 
 
 

@@ -1,4 +1,4 @@
-public abstract class SubSystem {
+public abstract class SubSystem implements Runnable{
     protected Integer intR1Remain;
     protected Integer intR2Remain;
 
@@ -21,6 +21,19 @@ public abstract class SubSystem {
     public SubSystem(int intR1Remain, int intR2Remain) {
         this.intR1Remain = intR1Remain;
         this.intR2Remain = intR2Remain;
+    }
+
+    // must be synchronized before call this function
+    public void allocate(Process process){
+        setIntR1Remain(getIntR1Remain() - process.getMaxR1());
+        setIntR2Remain(getIntR2Remain() - process.getMaxR2());
+        return;
+    }
+
+    // must be synchronized before call this function
+    public void unAllocate(Process process){
+        setIntR1Remain(getIntR1Remain() + process.getMaxR1());
+        setIntR2Remain(getIntR2Remain() + process.getMaxR2());
     }
 
     public boolean checkEnoughResource(Process process){
