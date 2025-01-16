@@ -51,10 +51,11 @@ public abstract class SubSystem extends Thread{
         synchronized (this) {
             int newR1Remain = R1Remain - process.getMaxR1();
             int newR2Remain = R2Remain - process.getMaxR2();
+            /*System.out.println("-- task: " + process.getName() + " --");
             System.out.println("-- Resources before allocation: R1:" + R1Remain + ", R2:" + R2Remain + " --");
-            System.out.println("-- Resources after allocation: R1:" + newR1Remain + ", R2:" + newR2Remain + " --");
+            System.out.println("-- Resources after allocation: R1:" + newR1Remain + ", R2:" + newR2Remain + " --");*/
             if (newR1Remain < 0 || newR2Remain < 0) {
-                System.out.println("-- a core is stalled --");
+                //System.out.println("-- a core is stalled --");
                 throw new NotEnoughResourcesException("task cannot be allocated");
             }
             R1Remain = newR1Remain;
@@ -64,10 +65,10 @@ public abstract class SubSystem extends Thread{
 
     public void deallocate(Process process) {
         synchronized (this) {
-            System.out.println("-- Resources before deallocation: R1:" + R1Remain + ", R2:" + R2Remain + " --");
+            //System.out.println("-- Resources before de-allocation: R1:" + R1Remain + ", R2:" + R2Remain + " --");
             R1Remain += process.getMaxR1();
             R2Remain += process.getMaxR2();
-            System.out.println("-- Resources after deallocation: R1:" + R1Remain + ", R2:" + R2Remain + " --");
+            //System.out.println("-- Resources after de-allocation: R1:" + R1Remain + ", R2:" + R2Remain + " --");
         }
     }
 

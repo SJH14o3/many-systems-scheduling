@@ -51,18 +51,19 @@ public class System2Core extends Thread {
                     if (coreState == CORE_STATE_STOPPED) {
                         break;
                     }
+
                     owner.message[coreIndex].setLength(0);
                     owner.message[coreIndex].append("    Core").append((coreIndex+1)).append(":\n")
                             .append("       Running Task: ");
+                    boolean flag = true; // this is how I fixed the bug...
                     if (coreState == CORE_STATE_IDLE) {
                         currentTask = owner.getReadyQueue().getProcess();
                         owner.allocate(currentTask);
                         allocationState = ALLOCATION_STATE_ALLOCATED;
                         coreState = CORE_STATE_RUNNING;
-                    }
-                    // if a new task has arrived, core will check if it has a higher priority
-                    else if (owner.getTaskState() == SubSystem2.TASK_STATE_NEW_ARRIVED &&
-                            (coreState == CORE_STATE_RUNNING || coreState == CORE_STATE_STALLED)) {
+                        flag = false;
+                    } else if (owner.getTaskState() == SubSystem2.TASK_STATE_NEW_ARRIVED && (coreState == CORE_STATE_RUNNING || coreState == CORE_STATE_STALLED)) {
+                        // if a new task has arrived, core will check if it has a higher priority
                         // if new task is better, temp won't be null
                         ProcessSubSystem2 temp = owner.getReadyQueue().checkIfNewProcessHasHigherPriority(currentTask);
                         if (temp != null) {
@@ -73,8 +74,10 @@ public class System2Core extends Thread {
                             owner.allocate(currentTask); // might throw an exception if not enough resources are available
                             allocationState = ALLOCATION_STATE_ALLOCATED;
                             coreState = CORE_STATE_RUNNING;
+                            flag = false;
                         }
-                    } else if (coreState == CORE_STATE_STALLED) { // checking if task can be allocated again, or it will remain stalled
+                    }
+                    if (flag && coreState == CORE_STATE_STALLED) { // checking if task can be allocated again, or it will remain stalled
                         if (allocationState == ALLOCATION_STATE_NOT_ALLOCATED) {
                             owner.allocate(currentTask);
                         }
@@ -96,7 +99,7 @@ public class System2Core extends Thread {
                     owner.subSystemWait[coreIndex].release();
                     coreState = CORE_STATE_STALLED;
                     allocationState = ALLOCATION_STATE_NOT_ALLOCATED;
-                    owner.message[coreIndex].append("STALLED");
+                    owner.message[coreIndex].append("STALLED-").append(currentTask.getName());
                     owner.coreThreadWait[coreIndex].acquire();
                 } catch (EmptyQueueException e) {
                     owner.subSystemWait[coreIndex].release();
