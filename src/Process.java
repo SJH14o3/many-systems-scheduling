@@ -70,6 +70,10 @@ public abstract class Process {
         this.startTime = startTime;
     }
 
+    public int[] getMaxResourcesAsArray() {
+        return new int[]{maxR1, maxR2};
+    }
+
     public void increaseAge(){
         waitingQueuePriority++;
     }

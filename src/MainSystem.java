@@ -41,11 +41,11 @@ public class MainSystem {
                 for (int i = 0; i < SUBSYSTEM_COUNT; i++) {
                     mainThreadWait[i].acquire();
                 }
-                //TODO: main system print output
+                System.out.println("Time: " + time);
                 for (int i = 0; i < SUBSYSTEM_COUNT; i++) {
                     System.out.println(message[i]);
                 }
-                System.out.println("\n");
+                System.out.println("--------------------");
                 time++;
                 for (int i = 0; i < SUBSYSTEM_COUNT; i++) {
                     if (subSystems[i].systemState == SubSystem.STATE_FINISHED) {
@@ -59,7 +59,9 @@ public class MainSystem {
             }
             // stopping threads
             for (int i = 0; i < SUBSYSTEM_COUNT; i++) {
-                subSystems[i].stop();
+                System.out.println("Sub" + (i+1) + " Resources: R1=" + subSystems[i].getR1Remain() +
+                        " R2=" + subSystems[i].getR2Remain());
+                subSystems[i].stop(); //TODO: implement a better solution for stopping threads
             }
             System.out.println("all systems are finished");
         }

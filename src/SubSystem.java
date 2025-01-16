@@ -1,6 +1,8 @@
+import Exceptions.NotEnoughResourcesException;
+
 public abstract class SubSystem extends Thread{
-    protected Integer intR1Remain;
-    protected Integer intR2Remain;
+    protected Integer R1Remain;
+    protected Integer R2Remain;
 
     protected MainSystem owner;
 
@@ -11,20 +13,20 @@ public abstract class SubSystem extends Thread{
     public static final int STATE_FINISHED = 2;
     public static final int STATE_FINISH_REGISTERED = 3;
 
-    public int getIntR1Remain() {
-        return intR1Remain;
+    public int getR1Remain() {
+        return R1Remain;
     }
 
-    public void setIntR1Remain(int intR1Remain) {
-        this.intR1Remain = intR1Remain;
+    public void setR1Remain(int r1Remain) {
+        this.R1Remain = r1Remain;
     }
 
-    public int getIntR2Remain() {
-        return intR2Remain;
+    public int getR2Remain() {
+        return R2Remain;
     }
 
-    public void setIntR2Remain(int intR2Remain) {
-        this.intR2Remain = intR2Remain;
+    public void setR2Remain(int r2Remain) {
+        this.R2Remain = r2Remain;
     }
 
     public int getSystemState() {
@@ -40,28 +42,39 @@ public abstract class SubSystem extends Thread{
     }
 
     public SubSystem(int intR1Remain, int intR2Remain) {
-        this.intR1Remain = intR1Remain;
-        this.intR2Remain = intR2Remain;
+        this.R1Remain = intR1Remain;
+        this.R2Remain = intR2Remain;
         systemState = 1;
     }
 
-    // must be synchronized before call this function
-    public void allocate(Process process){
-        setIntR1Remain(getIntR1Remain() - process.getMaxR1());
-        setIntR2Remain(getIntR2Remain() - process.getMaxR2());
-        return;
+    public void allocate(Process process) throws NotEnoughResourcesException {
+        synchronized (this) {
+            int newR1Remain = R1Remain - process.getMaxR1();
+            int newR2Remain = R2Remain - process.getMaxR2();
+            System.out.println("-- Resources before allocation: R1:" + R1Remain + ", R2:" + R2Remain + " --");
+            System.out.println("-- Resources after allocation: R1:" + newR1Remain + ", R2:" + newR2Remain + " --");
+            if (newR1Remain < 0 || newR2Remain < 0) {
+                System.out.println("-- a core is stalled --");
+                throw new NotEnoughResourcesException("task cannot be allocated");
+            }
+            R1Remain = newR1Remain;
+            R2Remain = newR2Remain;
+        }
     }
 
-    // must be synchronized before call this function
-    public void unAllocate(Process process){
-        setIntR1Remain(getIntR1Remain() + process.getMaxR1());
-        setIntR2Remain(getIntR2Remain() + process.getMaxR2());
+    public void deallocate(Process process) {
+        synchronized (this) {
+            System.out.println("-- Resources before deallocation: R1:" + R1Remain + ", R2:" + R2Remain + " --");
+            R1Remain += process.getMaxR1();
+            R2Remain += process.getMaxR2();
+            System.out.println("-- Resources after deallocation: R1:" + R1Remain + ", R2:" + R2Remain + " --");
+        }
     }
 
     public boolean checkEnoughResource(Process process){
         boolean out = false;
-        synchronized (intR1Remain){
-            if (intR1Remain >= process.getMaxR1() && intR2Remain >= process.getMaxR2()){
+        synchronized (this){
+            if (R1Remain >= process.getMaxR1() && R2Remain >= process.getMaxR2()){
                 out = true;
             }
         }

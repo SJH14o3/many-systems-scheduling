@@ -9,12 +9,11 @@ public final class SubSystem1 extends SubSystem {
     public void run() {
         try {
             while (true) {
-                sleep(300); //TODO: remove with actual job
+                 //TODO: remove with actual job
                 owner.message[systemIndex].setLength(0);
-                owner.message[systemIndex].append("message from system " + (systemIndex+1) + " at time " + owner.time);
+                owner.message[systemIndex].append("Sub1:");
                 if (owner.time == 2) { //TODO: replace with actual finish statement
                     systemState = STATE_FINISHED;
-                    System.out.println("[THREAD] system " + (systemIndex+1) + " is finished");
                     owner.mainThreadWait[systemIndex].release();
                     break;
                 };
@@ -25,7 +24,7 @@ public final class SubSystem1 extends SubSystem {
             while(true) {
                 owner.subSystemWait[systemIndex].acquire();
                 owner.message[systemIndex].setLength(0);
-                owner.message[systemIndex].append("system " + (systemIndex + 1) + " is finished");
+                owner.message[systemIndex].append("Sub1 is finished");
                 owner.mainThreadWait[systemIndex].release();
             }
         } catch (InterruptedException e) {

@@ -19,4 +19,9 @@ public final class ProcessSubSystem2 extends Process {
         return new ProcessSubSystem2(parts[0], Integer.parseInt(parts[1]), Integer.parseInt(parts[2]),
                 Integer.parseInt(parts[3]), Integer.parseInt(parts[4]));
     }
+
+    public boolean runForATimeUnit() {
+        remainingTime--;
+        return remainingTime == 0;
+    }
 }
