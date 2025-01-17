@@ -37,7 +37,7 @@ public class Main {
                 }
             }
         }
-        system1 = new SubSystem1(resources[0][0], resources[0][1]);
+        system1 = new SubSystem1(resources[0][0], resources[0][1], subSystem1Processes.toArray(new ProcessSubSystem1[0]));
         system2 = new SubSystem2(resources[1][0], resources[1][1], subSystem2Processes.toArray(new ProcessSubSystem2[0]));
         system3 = new SubSystem3(resources[2][0], resources[2][1]);
         SubSystem[] subSystems = {system1, system2, system3};

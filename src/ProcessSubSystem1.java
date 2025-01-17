@@ -1,6 +1,16 @@
 public final class ProcessSubSystem1 extends Process {
     private int targetCPU;
 
+
+    private int quantum;
+    public int getQuantum() {
+        return quantum;
+    }
+
+    public void setQuantum(int quantum) {
+        this.quantum = quantum;
+    }
+
     public int getTargetCPU() {
         return targetCPU;
     }

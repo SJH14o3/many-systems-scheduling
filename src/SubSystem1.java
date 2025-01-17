@@ -1,8 +1,43 @@
+import java.sql.SQLOutput;
+import java.util.Scanner;
+
 public final class SubSystem1 extends SubSystem {
 
-    public SubSystem1(int intR1Remain, int intR2Remain) {
+    public ProcessSubSystem1[] processSubSystem1;
+
+    private void setQuantums(){
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        for (int i = 0; i < processSubSystem1.length; i++) {
+            if (processSubSystem1[i].burstTime > max){
+                max = processSubSystem1[i].burstTime;
+            }
+            if (processSubSystem1[i].burstTime < min){
+                min = processSubSystem1[i].burstTime;
+            }
+        }
+        int maxQ=5, minQ=1;
+        for (int i = 0; i < processSubSystem1.length; i++) {
+            if (max == min) {
+                processSubSystem1[i].setQuantum(maxQ); // If all burst times are equal, assign max quantum
+            } else {
+                processSubSystem1[i].setQuantum((int) Math.round(minQ + ((double)(processSubSystem1[i].burstTime - min) / (max - min)) * (maxQ - minQ)));
+            }
+        }
+    }
+
+    public SubSystem1(int intR1Remain, int intR2Remain, ProcessSubSystem1[] processSubSystem1) {
         super(intR1Remain, intR2Remain);
+        this.processSubSystem1 = processSubSystem1;
         systemIndex = 0;
+        setQuantums();
+        printQs();
+    }
+
+    public void printQs(){
+        for (int i = 0; i < processSubSystem1.length; i++) {
+            System.out.println(processSubSystem1[i].getName() + ":" + processSubSystem1[i].getQuantum());
+        }
     }
 
     @Override
