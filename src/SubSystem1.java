@@ -4,6 +4,7 @@ import java.util.Scanner;
 public final class SubSystem1 extends SubSystem {
 
     public ProcessSubSystem1[] processSubSystem1;
+    public WaitingQueueSub1 waitingQueue;
 
     private void setQuantums(){
         int min = Integer.MAX_VALUE;
@@ -32,6 +33,7 @@ public final class SubSystem1 extends SubSystem {
         systemIndex = 0;
         setQuantums();
         printQs();
+        waitingQueue = new WaitingQueueSub1(this);
     }
 
     public void printQs(){

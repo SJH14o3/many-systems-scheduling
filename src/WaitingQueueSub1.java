@@ -5,7 +5,7 @@ import java.util.LinkedList;
 
 public class WaitingQueueSub1 {
     SubSystem owner;
-    LinkedList<ProcessSubSystem1> waitingList;
+    final LinkedList<ProcessSubSystem1> waitingList;
 
     public void addLast(ProcessSubSystem1 processSubSystem1){
         synchronized (waitingList){
@@ -24,7 +24,6 @@ public class WaitingQueueSub1 {
         ProcessSubSystem1 out = null;
         synchronized (waitingList){
             Iterator<ProcessSubSystem1> iterator = waitingList.iterator();
-
             while (iterator.hasNext()) {
                 ProcessSubSystem1 processSubSystem1 = iterator.next();
                 if ((processSubSystem1.getTargetCPU() == targetCPU || !affinity) && owner.checkEnoughResource(processSubSystem1)) { // Condition to remove
