@@ -5,18 +5,11 @@ import java.util.PriorityQueue;
 import java.util.concurrent.Semaphore;
 
 public final class SubSystem2 extends SubSystem {
-
-    public Semaphore[] subSystemWait;
-    public Semaphore[] coreThreadWait;
-    public StringBuilder[] message;
     private ProcessSubSystem2[] processes;
     // this array list will store processes which have not arrived yet.
-    private final ArrayList<ProcessSubSystem2> notArrivedProcesses;
     private final SubSystem2ReadyQueue readyQueue;
     private int taskState;
     private final System2Core[] cores;
-
-    public static final int CORE_COUNT = 2;
 
     public static final int TASK_STATE_NEW_ARRIVED = 1;
     public static final int TASK_STATE_NORMAL = 2;
@@ -41,36 +34,29 @@ public final class SubSystem2 extends SubSystem {
         return readyQueue;
     }
 
-    public SubSystem2(int intR1Remain, int intR2Remain, ProcessSubSystem2[] processes) {
-        super(intR1Remain, intR2Remain);
+    public SubSystem2(int intR1Remain, int intR2Remain, ProcessSubSystem2[] processes, int coresCount) {
+        super(intR1Remain, intR2Remain, processes, coresCount);
         systemIndex = 1;
         this.processes = processes;
-        subSystemWait = new Semaphore[CORE_COUNT];
-        coreThreadWait = new Semaphore[CORE_COUNT];
-        message = new StringBuilder[CORE_COUNT];
         cores = new System2Core[CORE_COUNT];
         readyQueue = new SubSystem2ReadyQueue(this);
         for (int i = 0; i < CORE_COUNT; i++) {
-            subSystemWait[i] = new Semaphore(0);
-            coreThreadWait[i] = new Semaphore(0);
-            message[i] = new StringBuilder();
             cores[i] = new System2Core(this, i);
         }
-        notArrivedProcesses = new ArrayList<>(Arrays.asList(processes));
-        notArrivedProcesses.sort(Comparator.comparing(process -> process.startTime));
     }
 
-    private void checkForNewProcesses() {
-        ArrayList<ProcessSubSystem2> newProcesses = new ArrayList<>();
-        for (ProcessSubSystem2 notArrivedProcess : notArrivedProcesses) {
+    @Override
+    protected void checkForNewProcesses() {
+        ArrayList<Process> newProcesses = new ArrayList<>();
+        for (Process notArrivedProcess : notArrivedProcesses) {
             if (notArrivedProcess.startTime == owner.time) {
                 newProcesses.add(notArrivedProcess);
                 taskState = TASK_STATE_NEW_ARRIVED;
             } else break;
         }
-        for (ProcessSubSystem2 newProcess : newProcesses) {
+        for (Process newProcess : newProcesses) {
             notArrivedProcesses.remove(newProcess);
-            readyQueue.addProcess(newProcess);
+            readyQueue.addProcess((ProcessSubSystem2) newProcess);
         }
     }
 

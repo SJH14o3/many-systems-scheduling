@@ -57,6 +57,7 @@ public class SubSystem2ReadyQueue {
         }
     }
 
+    // to print queue content in order, we have to clone it
     public PriorityQueue<ProcessSubSystem2> cloneQueue(){
         return new PriorityQueue<>(priorityQueue);
     }

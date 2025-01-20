@@ -1,10 +1,8 @@
-import java.sql.SQLOutput;
-import java.util.Scanner;
-
 public final class SubSystem1 extends SubSystem {
 
     public ProcessSubSystem1[] processSubSystem1;
     public WaitingQueueSub1 waitingQueue;
+    public System1Core[] cores;
 
     private void setQuantums(){
         int min = Integer.MAX_VALUE;
@@ -27,8 +25,19 @@ public final class SubSystem1 extends SubSystem {
         }
     }
 
-    public SubSystem1(int intR1Remain, int intR2Remain, ProcessSubSystem1[] processSubSystem1) {
-        super(intR1Remain, intR2Remain);
+    public ProcessSubSystem1 pullProcess(int index) {
+        ProcessSubSystem1 out = null;
+        for (int i = (index+1) % cores.length; i != index; i = (i+1) % cores.length) {
+            out = cores[i].readyQueue.getAndAllocate();
+            if (out != null) {
+                break;
+            }
+        }
+        return out;
+    }
+
+    public SubSystem1(int intR1Remain, int intR2Remain, ProcessSubSystem1[] processSubSystem1, int sys1CoresCount) {
+        super(intR1Remain, intR2Remain, processSubSystem1, sys1CoresCount);
         this.processSubSystem1 = processSubSystem1;
         systemIndex = 0;
         setQuantums();
@@ -67,5 +76,10 @@ public final class SubSystem1 extends SubSystem {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    protected void checkForNewProcesses() {
+        //TODO: implement
     }
 }

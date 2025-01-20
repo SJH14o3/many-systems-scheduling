@@ -1,7 +1,6 @@
 public final class ProcessSubSystem1 extends Process {
     private int targetCPU;
 
-
     private int quantum;
     public int getQuantum() {
         return quantum;
@@ -17,6 +16,11 @@ public final class ProcessSubSystem1 extends Process {
 
     public void setTargetCPU(int targetCPU) {
         this.targetCPU = targetCPU;
+    }
+
+    public boolean runForATimeUnit() {
+        burstTime--;
+        return burstTime == 0;
     }
 
     public ProcessSubSystem1(String name, int burstTime, int maxR1, int maxR2, int startTime, int targetCPU) {

@@ -1,5 +1,10 @@
 import Exceptions.NotEnoughResourcesException;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.concurrent.Semaphore;
+
 public abstract class SubSystem extends Thread{
     protected Integer R1Remain;
     protected Integer R2Remain;
@@ -8,6 +13,15 @@ public abstract class SubSystem extends Thread{
 
     protected int systemState;
     protected int systemIndex;
+
+    public Semaphore[] subSystemWait;
+    public Semaphore[] coreThreadWait;
+
+    public StringBuilder[] message;
+    public final int CORE_COUNT;
+
+    protected final ArrayList<Process> notArrivedProcesses;
+
 
     public static final int STATE_RUNNING = 1;
     public static final int STATE_FINISHED = 2;
@@ -41,10 +55,21 @@ public abstract class SubSystem extends Thread{
         owner = instance;
     }
 
-    public SubSystem(int intR1Remain, int intR2Remain) {
+    public SubSystem(int intR1Remain, int intR2Remain, Process[] processes, int coresCount) {
         this.R1Remain = intR1Remain;
         this.R2Remain = intR2Remain;
+        CORE_COUNT = coresCount;
         systemState = 1;
+        notArrivedProcesses = new ArrayList<>(Arrays.asList(processes));
+        notArrivedProcesses.sort(Comparator.comparing(process -> process.startTime));
+        subSystemWait = new Semaphore[CORE_COUNT];
+        coreThreadWait = new Semaphore[CORE_COUNT];
+        message = new StringBuilder[CORE_COUNT];
+        for (int i = 0; i < CORE_COUNT; i++) {
+            subSystemWait[i] = new Semaphore(0);
+            coreThreadWait[i] = new Semaphore(0);
+            message[i] = new StringBuilder();
+        }
     }
 
     public void allocate(Process process) throws NotEnoughResourcesException {
@@ -72,6 +97,18 @@ public abstract class SubSystem extends Thread{
         }
     }
 
+    // this function will check if process can be allocated and if it can be, it would allocate it.
+    public boolean checkAndAllocate(Process process) {
+        synchronized (this) {
+            if (R1Remain > process.getMaxR1() && R2Remain > process.getMaxR2()) {
+                R1Remain -= process.getMaxR1();
+                R2Remain -= process.getMaxR2();
+                return true;
+            }
+            return false;
+        }
+    }
+
     public boolean checkEnoughResource(Process process){
         boolean out = false;
         synchronized (this){
@@ -81,4 +118,6 @@ public abstract class SubSystem extends Thread{
         }
         return out;
     }
+
+    protected abstract void checkForNewProcesses();
 }

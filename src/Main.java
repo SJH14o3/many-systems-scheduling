@@ -6,6 +6,10 @@ public class Main {
 
 
     public static final int systemCount = 3;
+    public static final int Sys1CoresCount = 3;
+    public static final int Sys2CoresCount = 2;
+    public static final int Sys3CoresCount = 1;
+    public static final int Sys4CoresCount = 2;
     public static void main(String[] args) {
         ArrayList<ProcessSubSystem1> subSystem1Processes = new ArrayList<>();
         ArrayList<ProcessSubSystem2> subSystem2Processes = new ArrayList<>();
@@ -37,9 +41,9 @@ public class Main {
                 }
             }
         }
-        system1 = new SubSystem1(resources[0][0], resources[0][1], subSystem1Processes.toArray(new ProcessSubSystem1[0]));
-        system2 = new SubSystem2(resources[1][0], resources[1][1], subSystem2Processes.toArray(new ProcessSubSystem2[0]));
-        system3 = new SubSystem3(resources[2][0], resources[2][1]);
+        system1 = new SubSystem1(resources[0][0], resources[0][1], subSystem1Processes.toArray(new ProcessSubSystem1[0]), Sys1CoresCount);
+        system2 = new SubSystem2(resources[1][0], resources[1][1], subSystem2Processes.toArray(new ProcessSubSystem2[0]), Sys2CoresCount);
+        system3 = new SubSystem3(resources[2][0], resources[2][1], subSystem3Processes.toArray(new ProcessSubSystem3[0]), Sys3CoresCount);
         SubSystem[] subSystems = {system1, system2, system3};
         MainSystem mainSystem = new MainSystem(subSystems);
         for (int i = 0; i < subSystems.length; i++) {

@@ -20,21 +20,19 @@ public class WaitingQueueSub1 {
     }
 
 
-    public ProcessSubSystem1 getWaitingProcess(int targetCPU, boolean affinity) throws NullWaitingQueueReturn {
+    // get and allocate process
+    public ProcessSubSystem1 getWaitingProcess(int targetCPU, boolean affinity) {
         ProcessSubSystem1 out = null;
         synchronized (waitingList){
             Iterator<ProcessSubSystem1> iterator = waitingList.iterator();
             while (iterator.hasNext()) {
                 ProcessSubSystem1 processSubSystem1 = iterator.next();
-                if ((processSubSystem1.getTargetCPU() == targetCPU || !affinity) && owner.checkEnoughResource(processSubSystem1)) { // Condition to remove
+                if ((processSubSystem1.getTargetCPU() == targetCPU || !affinity) && owner.checkAndAllocate(processSubSystem1)) { // Condition to remove
                     out = processSubSystem1;
                     iterator.remove(); // Safe removal
                     break; // Stop iteration
                 }
             }
-        }
-        if (out == null){
-            throw new NullWaitingQueueReturn();
         }
         return out;
     }
