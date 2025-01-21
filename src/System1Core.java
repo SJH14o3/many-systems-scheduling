@@ -15,6 +15,12 @@ public class System1Core extends Thread{
     public static final int CORE_STATE_TASK_FINISHED = 3;
     public static final int CORE_STATE_STOPPED = 4;
 
+
+    public int getCoreState() {
+        return coreState;
+    }
+
+
     private boolean assignTask() {
         ProcessSubSystem1 task = owner.waitingQueue.getWaitingProcess(coreIndex+1, true);
         if (task == null) { // waiting queue could not return a suitable process
@@ -55,7 +61,7 @@ public class System1Core extends Thread{
         }
         owner.message[coreIndex].append("    Core").append(coreIndex + 1).append(":\n")
                 .append("       Running Task:").append(taskName).append("\n")
-                .append("       Ready Queue: ").append(readyQueue.toString()).append("\n");
+                .append("       Ready Queue: ").append(readyQueue.getContent()).append("\n");
     }
 
     @Override

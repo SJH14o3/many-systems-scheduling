@@ -1,8 +1,15 @@
+import java.util.ArrayList;
+
 public final class SubSystem1 extends SubSystem {
 
     public ProcessSubSystem1[] processSubSystem1;
     public WaitingQueueSub1 waitingQueue;
     public System1Core[] cores;
+
+    private int taskState;
+
+    public static final int TASK_STATE_NEW_ARRIVED = 1;
+    public static final int TASK_STATE_NORMAL = 2;
 
     private void setQuantums(){
         int min = Integer.MAX_VALUE;
@@ -25,6 +32,7 @@ public final class SubSystem1 extends SubSystem {
         }
     }
 
+    // for load Balancing
     public ProcessSubSystem1 pullProcess(int index) {
         ProcessSubSystem1 out = null;
         for (int i = (index+1) % cores.length; i != index; i = (i+1) % cores.length) {
@@ -51,23 +59,61 @@ public final class SubSystem1 extends SubSystem {
         }
     }
 
+
+    @Override
+    protected void checkForNewProcesses() {
+        ArrayList<ProcessSubSystem1> newProcesses = new ArrayList<>();
+        for (Process notArrivedProsess : notArrivedProcesses){
+            if (notArrivedProsess.startTime == owner.time) {
+                newProcesses.add((ProcessSubSystem1) notArrivedProsess);
+                taskState = TASK_STATE_NEW_ARRIVED;
+            } else break;
+        }
+        for (ProcessSubSystem1 newProcess : newProcesses){
+            notArrivedProcesses.remove(newProcess);
+            cores[newProcess.getTargetCPU()-1].readyQueue.addOne(newProcess);
+        }
+    }
+
+    private boolean isSystemFinished(){
+        boolean coresFinished = true;
+        boolean isEmptyReadyQueues = true;
+        for (System1Core core : cores){
+            if (core.getCoreState() != System1Core.CORE_STATE_IDLE){
+                coresFinished = false;
+                break;
+            }
+        }
+        for (System1Core core : cores){
+            if (!core.readyQueue.isEmpty()){
+                isEmptyReadyQueues = false ;
+                break;
+            }
+        }
+        return (notArrivedProcesses.isEmpty() && waitingQueue.isEmpty() && isEmptyReadyQueues && coresFinished);
+    }
+
     @Override
     public void run() {
         try {
+            for (System1Core core : cores) {
+                core.start();
+            }
             while (true) {
-                 //TODO: remove with actual job
+                //TODO: remove with actual job
                 owner.message[systemIndex].setLength(0);
                 owner.message[systemIndex].append("Sub1:");
                 if (owner.time == 2) { //TODO: replace with actual finish statement
                     systemState = STATE_FINISHED;
                     owner.mainThreadWait[systemIndex].release();
                     break;
-                };
+                }
+                ;
                 owner.mainThreadWait[systemIndex].release();
                 owner.subSystemWait[systemIndex].acquire();
             }
             //TODO: task is finished here
-            while(true) {
+            while (true) {
                 owner.subSystemWait[systemIndex].acquire();
                 owner.message[systemIndex].setLength(0);
                 owner.message[systemIndex].append("Sub1 is finished");
@@ -78,8 +124,7 @@ public final class SubSystem1 extends SubSystem {
         }
     }
 
-    @Override
-    protected void checkForNewProcesses() {
-        //TODO: implement
-    }
+
+
+
 }

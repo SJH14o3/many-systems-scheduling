@@ -20,6 +20,11 @@ public class SubSystem1ReadyQueue {
         }
     }
 
+    public boolean isEmpty(){
+        return queue.isEmpty();
+    }
+
+
     // since other cores might access this queue, it must be synchronized
     public ProcessSubSystem1 getProcess() {
         synchronized (queue) {

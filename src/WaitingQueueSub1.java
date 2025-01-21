@@ -13,6 +13,9 @@ public class WaitingQueueSub1 {
         }
     }
 
+    public boolean isEmpty(){
+        return waitingList.isEmpty();
+    }
 
     public WaitingQueueSub1(SubSystem subSystem){
         waitingList = new LinkedList<>();

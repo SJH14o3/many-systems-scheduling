@@ -21,6 +21,8 @@ public class WaitingQueue {
         queue.addAll(Arrays.asList(temp));
     }
 
+
+
     public void addProcess(Process process){
         synchronized (lock){
             process.setWaitingQueuePriority(0);
