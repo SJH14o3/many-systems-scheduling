@@ -1,27 +1,12 @@
 import Exceptions.IdleSystemException;
 
-public class System1Core extends Thread{
+public class System1Core extends SystemCore{
     private final SubSystem1 owner;
-    private final int coreIndex;
-    private int coreState;
     private ProcessSubSystem1 currentTask;
     public SubSystem1ReadyQueue readyQueue;
     private int remainingQuantum;
 
-
-    public static final int CORE_STATE_IDLE = 0;
-    public static final int CORE_STATE_RUNNING = 1;
-    public static final int CORE_STATE_STALLED = 2;
-    public static final int CORE_STATE_TASK_FINISHED = 3;
-    public static final int CORE_STATE_STOPPED = 4;
-
-
-    public int getCoreState() {
-        return coreState;
-    }
-
-
-    private boolean assignTask() {
+    private void assignTask() {
         ProcessSubSystem1 task = owner.waitingQueue.getWaitingProcess(coreIndex+1, true);
         if (task == null) { // waiting queue could not return a suitable process
             task = readyQueue.getAndAllocate();
@@ -33,7 +18,6 @@ public class System1Core extends Thread{
             task = owner.waitingQueue.getWaitingProcess(coreIndex+1, false);
         }
         currentTask = task;
-        return task == null;
     }
 
     private void runForATimeUnit() {
@@ -42,11 +26,12 @@ public class System1Core extends Thread{
         boolean bool = remainingQuantum == 0 || taskIsFinished;
         if (bool) {
             if (!taskIsFinished) {
-                readyQueue.addOne(currentTask);
+                owner.addBackToCoreReadyQueue(currentTask);
             }
             owner.deallocate(currentTask);
             currentTask = null;
             coreState = CORE_STATE_IDLE;
+            //System.out.println("core" + (coreIndex+1) + " switching context");
         }
     }
 
@@ -61,7 +46,7 @@ public class System1Core extends Thread{
         }
         owner.message[coreIndex].append("    Core").append(coreIndex + 1).append(":\n")
                 .append("       Running Task:").append(taskName).append("\n")
-                .append("       Ready Queue: ").append(readyQueue.getContent()).append("\n");
+                .append("       Ready Queue: ").append(owner.getQueueContent(readyQueue.queue));
     }
 
     @Override
@@ -115,7 +100,8 @@ public class System1Core extends Thread{
     }
 
     public System1Core(SubSystem1 owner, int coreIndex) {
+        super(coreIndex);
         this.owner = owner;
-        this.coreIndex = coreIndex;
+        readyQueue = new SubSystem1ReadyQueue(this.owner, this);
     }
 }

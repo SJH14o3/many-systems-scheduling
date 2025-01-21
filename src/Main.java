@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -41,13 +40,13 @@ public class Main {
                 }
             }
         }
-        system1 = new SubSystem1(resources[0][0], resources[0][1], subSystem1Processes.toArray(new ProcessSubSystem1[0]), Sys1CoresCount);
-        system2 = new SubSystem2(resources[1][0], resources[1][1], subSystem2Processes.toArray(new ProcessSubSystem2[0]), Sys2CoresCount);
-        system3 = new SubSystem3(resources[2][0], resources[2][1], subSystem3Processes.toArray(new ProcessSubSystem3[0]), Sys3CoresCount);
+        system1 = new SubSystem1(resources[0][0], resources[0][1], subSystem1Processes.toArray(new ProcessSubSystem1[0]), Sys1CoresCount, false);
+        system2 = new SubSystem2(resources[1][0], resources[1][1], subSystem2Processes.toArray(new ProcessSubSystem2[0]), Sys2CoresCount, false);
+        system3 = new SubSystem3(resources[2][0], resources[2][1], subSystem3Processes.toArray(new ProcessSubSystem3[0]), Sys3CoresCount, false);
         SubSystem[] subSystems = {system1, system2, system3};
         MainSystem mainSystem = new MainSystem(subSystems);
-        for (int i = 0; i < subSystems.length; i++) {
-            subSystems[i].setOwner(mainSystem);
+        for (SubSystem subSystem : subSystems) {
+            subSystem.setOwner(mainSystem);
         }
         try {
             mainSystem.start();

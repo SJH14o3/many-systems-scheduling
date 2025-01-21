@@ -1,19 +1,12 @@
-import Exceptions.EmptyQueueException;
-
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class SubSystem1ReadyQueue {
-    private final Queue<ProcessSubSystem1> queue;
+    public final Queue<ProcessSubSystem1> queue;
     private final SubSystem1 owner;
+    private final System1Core core;
 
-    public void addAll(ArrayList<ProcessSubSystem1> in) {
-        synchronized (queue) {
-            queue.addAll(in);
-        }
-    }
     public void addOne(ProcessSubSystem1 in) {
         synchronized (queue) {
             queue.add(in);
@@ -59,25 +52,23 @@ public class SubSystem1ReadyQueue {
         }
     }
 
-    public String getContent() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("[");
-        boolean first = true;
-        for (ProcessSubSystem1 processSubSystem1 : queue) {
-            if (first) {
-                first = false;
+    public ProcessSubSystem1 tryPulling() {
+        synchronized (queue) {
+            // if queue is empty then pulling from this queue fails
+            if (queue.isEmpty()) {
+                return null;
             }
-            else {
-                sb.append(",");
+            // if core is idle and there is only 1 process, the core is going to run it I am pretty sure unless it cannot be allocated
+            if (core.getCoreState() == SystemCore.CORE_STATE_IDLE && queue.size() == 1) {
+                return null;
             }
-            sb.append(processSubSystem1.getName());
+            return getAndAllocate();
         }
-        sb.append("]\n");
-        return sb.toString();
     }
 
-    public SubSystem1ReadyQueue(ArrayList<ProcessSubSystem1> in, SubSystem1 owner) {
-        this.queue = new LinkedList<>(in);
+    public SubSystem1ReadyQueue(SubSystem1 owner, System1Core core) {
+        this.queue = new LinkedList<>();
         this.owner = owner;
+        this.core = core;
     }
 }

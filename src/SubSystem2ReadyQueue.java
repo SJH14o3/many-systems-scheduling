@@ -1,6 +1,6 @@
 import Exceptions.EmptyQueueException;
-import Exceptions.NotEnoughResourcesException;
 
+import java.util.Comparator;
 import java.util.PriorityQueue;
 
 public class SubSystem2ReadyQueue {
@@ -8,7 +8,7 @@ public class SubSystem2ReadyQueue {
     SubSystem2 owner;
     public SubSystem2ReadyQueue(SubSystem2 owner){
         this.owner = owner;
-        priorityQueue = new PriorityQueue<>((t1, t2)-> Integer.compare(t1.getRemainingTime(),t2.getRemainingTime()));
+        priorityQueue = new PriorityQueue<>(Comparator.comparingInt(ProcessSubSystem2::getRemainingTime));
     }
     public void addProcess(ProcessSubSystem2 processSubSystem2){
         synchronized (priorityQueue) {
@@ -44,16 +44,6 @@ public class SubSystem2ReadyQueue {
                 throw new EmptyQueueException("ready queue is empty");
             }
             return processSubSystem;
-        }
-    }
-
-    public void retrieveProcess(ProcessSubSystem2 processSubSystem2){
-        synchronized (priorityQueue){
-            processSubSystem2.setRemainingTime(processSubSystem2.getRemainingTime() - 1);
-            owner.deallocate(processSubSystem2);
-            if (processSubSystem2.getRemainingTime() != 0){
-                priorityQueue.add(processSubSystem2);
-            }
         }
     }
 

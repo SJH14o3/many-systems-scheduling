@@ -1,7 +1,3 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.concurrent.Semaphore;
 
 public class MainSystem {
@@ -29,43 +25,37 @@ public class MainSystem {
 
         public void start() throws InterruptedException {
             int activeSubsystems = subSystems.length;
-            ArrayList<Integer> indexes = new ArrayList<>(subSystems.length);
-            for (int i = 0; i < subSystems.length; i++) {
-                indexes.add(i);
-            }
             // threads (subsystems) starts to run
             for (int i = 0; i < SUBSYSTEM_COUNT; i++) {
                 subSystems[i].start();
             }
             while (activeSubsystems != 0) {
-                for (int i = 0; i < SUBSYSTEM_COUNT; i++) {
-                    mainThreadWait[i].acquire();
+                for (Semaphore value : mainThreadWait) {
+                    value.acquire();
                 }
                 System.out.println("Time: " + time);
-                for (int i = 0; i < SUBSYSTEM_COUNT; i++) {
-                    System.out.println(message[i]);
+                for (StringBuilder stringBuilder : message) {
+                    System.out.println(stringBuilder);
                 }
                 System.out.println("--------------------");
                 time++;
-                for (int i = 0; i < SUBSYSTEM_COUNT; i++) {
-                    if (subSystems[i].systemState == SubSystem.STATE_FINISHED) {
+                for (SubSystem subSystem : subSystems) {
+                    if (subSystem.systemState == SubSystem.STATE_FINISHED) {
                         activeSubsystems--;
-                        subSystems[i].setSystemState(SubSystem.STATE_FINISH_REGISTERED);
+                        subSystem.setSystemState(SubSystem.STATE_FINISH_REGISTERED);
                     }
                 }
-                for (int i = 0; i < SUBSYSTEM_COUNT; i++) {
-                    subSystemWait[i].release();
+                for (Semaphore semaphore : subSystemWait) {
+                    semaphore.release();
                 }
             }
             // stopping threads
             for (int i = 0; i < SUBSYSTEM_COUNT; i++) {
                 System.out.println("Sub" + (i+1) + " Resources: R1=" + subSystems[i].getR1Remain() +
                         " R2=" + subSystems[i].getR2Remain());
-                subSystems[i].stop(); //TODO: implement a better solution for stopping threads
+                subSystems[i].setSystemState(SubSystem.STATE_STOPPED);
+                subSystemWait[i].release();
             }
             System.out.println("all systems are finished");
         }
-
-
-
 }

@@ -1,5 +1,5 @@
 public final class ProcessSubSystem1 extends Process {
-    private int targetCPU;
+    private final int targetCPU;
 
     private int quantum;
     public int getQuantum() {
@@ -12,10 +12,6 @@ public final class ProcessSubSystem1 extends Process {
 
     public int getTargetCPU() {
         return targetCPU;
-    }
-
-    public void setTargetCPU(int targetCPU) {
-        this.targetCPU = targetCPU;
     }
 
     public boolean runForATimeUnit() {

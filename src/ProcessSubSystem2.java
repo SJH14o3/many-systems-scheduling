@@ -5,10 +5,6 @@ public final class ProcessSubSystem2 extends Process {
         return remainingTime;
     }
 
-    public void setRemainingTime(int remainingTime) {
-        this.remainingTime = remainingTime;
-    }
-
     public ProcessSubSystem2(String name, int burstTime, int maxR1, int maxR2, int startTime) {
         super(name, burstTime, maxR1, maxR2, startTime);
         remainingTime = burstTime;

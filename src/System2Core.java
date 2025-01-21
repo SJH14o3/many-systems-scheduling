@@ -1,44 +1,18 @@
 import Exceptions.EmptyQueueException;
 import Exceptions.NotEnoughResourcesException;
 
-public class System2Core extends Thread {
+public class System2Core extends SystemCore {
     private final SubSystem2 owner;
-    private final int coreIndex;
-    private int coreState;
     private ProcessSubSystem2 currentTask;
     private int allocationState = ALLOCATION_STATE_NOT_ALLOCATED;
-
-    public static final int CORE_STATE_IDLE = 0;
-    public static final int CORE_STATE_RUNNING = 1;
-    public static final int CORE_STATE_STALLED = 2;
-    public static final int CORE_STATE_TASK_FINISHED = 3;
-    public static final int CORE_STATE_STOPPED = 4;
 
     public static final int ALLOCATION_STATE_ALLOCATED = 1;
     public static final int ALLOCATION_STATE_NOT_ALLOCATED = 2;
 
     public System2Core(SubSystem2 owner, int coreIndex) {
+        super(coreIndex);
         this.owner = owner;
-        this.coreIndex = coreIndex;
         coreState = CORE_STATE_IDLE;
-    }
-
-    public int getCoreState() {
-        return coreState;
-    }
-
-    public void setFinished() {
-        coreState = CORE_STATE_STOPPED;
-    }
-    public String getStateAsString() {
-        return switch (coreState) {
-            case CORE_STATE_IDLE -> "IDLE";
-            case CORE_STATE_RUNNING -> "RUNNING";
-            case CORE_STATE_STALLED -> "STALLED";
-            case CORE_STATE_TASK_FINISHED -> "TASK_FINISHED";
-            case CORE_STATE_STOPPED -> "STOPPED";
-            default -> "UNKNOWN";
-        };
     }
 
     @Override

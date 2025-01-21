@@ -21,26 +21,20 @@ public abstract class SubSystem extends Thread{
     public final int CORE_COUNT;
 
     protected final ArrayList<Process> notArrivedProcesses;
+    protected final boolean dontSendReport;
 
 
     public static final int STATE_RUNNING = 1;
     public static final int STATE_FINISHED = 2;
     public static final int STATE_FINISH_REGISTERED = 3;
+    public static final int STATE_STOPPED = 4;
 
     public int getR1Remain() {
         return R1Remain;
     }
 
-    public void setR1Remain(int r1Remain) {
-        this.R1Remain = r1Remain;
-    }
-
     public int getR2Remain() {
         return R2Remain;
-    }
-
-    public void setR2Remain(int r2Remain) {
-        this.R2Remain = r2Remain;
     }
 
     public int getSystemState() {
@@ -55,11 +49,12 @@ public abstract class SubSystem extends Thread{
         owner = instance;
     }
 
-    public SubSystem(int intR1Remain, int intR2Remain, Process[] processes, int coresCount) {
+    public SubSystem(int intR1Remain, int intR2Remain, Process[] processes, int coresCount, boolean dontSendReport) {
         this.R1Remain = intR1Remain;
         this.R2Remain = intR2Remain;
         CORE_COUNT = coresCount;
-        systemState = 1;
+        this.dontSendReport = dontSendReport;
+        systemState = STATE_RUNNING;
         notArrivedProcesses = new ArrayList<>(Arrays.asList(processes));
         notArrivedProcesses.sort(Comparator.comparing(process -> process.startTime));
         subSystemWait = new Semaphore[CORE_COUNT];
@@ -76,11 +71,7 @@ public abstract class SubSystem extends Thread{
         synchronized (this) {
             int newR1Remain = R1Remain - process.getMaxR1();
             int newR2Remain = R2Remain - process.getMaxR2();
-            /*System.out.println("-- task: " + process.getName() + " --");
-            System.out.println("-- Resources before allocation: R1:" + R1Remain + ", R2:" + R2Remain + " --");
-            System.out.println("-- Resources after allocation: R1:" + newR1Remain + ", R2:" + newR2Remain + " --");*/
             if (newR1Remain < 0 || newR2Remain < 0) {
-                //System.out.println("-- a core is stalled --");
                 throw new NotEnoughResourcesException("task cannot be allocated");
             }
             R1Remain = newR1Remain;
@@ -90,17 +81,15 @@ public abstract class SubSystem extends Thread{
 
     public void deallocate(Process process) {
         synchronized (this) {
-            //System.out.println("-- Resources before de-allocation: R1:" + R1Remain + ", R2:" + R2Remain + " --");
             R1Remain += process.getMaxR1();
             R2Remain += process.getMaxR2();
-            //System.out.println("-- Resources after de-allocation: R1:" + R1Remain + ", R2:" + R2Remain + " --");
         }
     }
 
     // this function will check if process can be allocated and if it can be, it would allocate it.
     public boolean checkAndAllocate(Process process) {
         synchronized (this) {
-            if (R1Remain > process.getMaxR1() && R2Remain > process.getMaxR2()) {
+            if (R1Remain >= process.getMaxR1() && R2Remain >= process.getMaxR2()) {
                 R1Remain -= process.getMaxR1();
                 R2Remain -= process.getMaxR2();
                 return true;
@@ -119,5 +108,68 @@ public abstract class SubSystem extends Thread{
         return out;
     }
 
+    protected void dummyReport() {
+        owner.message[systemIndex].append("Sub").append(systemIndex+1);
+    }
+
+    protected void signalAllThreads() {
+        for (Semaphore semaphore : coreThreadWait) {
+            semaphore.release();
+        }
+    }
+
+    protected void acquireFromThreads() throws InterruptedException {
+        for (Semaphore semaphore : subSystemWait) {
+            semaphore.acquire();
+        }
+    }
+
+    protected void letCoresRunOnePhase() throws InterruptedException {
+        signalAllThreads();
+        acquireFromThreads();
+    }
+
+    protected void runLoop(SystemCore[] cores) {
+        try {
+            for (SystemCore core : cores) {
+                core.start();
+            }
+            while (true) {
+                // phase 1: preparing for running
+                checkForNewProcesses();
+                runATimeUnitBody();
+                // final phase: subsystem checks if is finished
+                if (isSystemFinished()) {
+                    systemState = STATE_FINISHED;
+                    owner.mainThreadWait[systemIndex].release();
+                    break;
+                }
+                // subsystem will let main know their time unit is finished
+                owner.mainThreadWait[systemIndex].release();
+                owner.subSystemWait[systemIndex].acquire();
+            }
+            // system task is finished here
+            for (int i = 0; i < CORE_COUNT; i++) {
+                cores[i].setFinished();
+                coreThreadWait[i].release();
+            }
+            while(true) {
+                owner.subSystemWait[systemIndex].acquire();
+                if (systemState == STATE_STOPPED) {
+                    //System.out.println("System stopped");
+                    break;
+                }
+                owner.message[systemIndex].setLength(0);
+                owner.message[systemIndex].append("Sub").append(systemIndex + 1).append(" is finished");
+                owner.mainThreadWait[systemIndex].release();
+            }
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     protected abstract void checkForNewProcesses();
+    protected abstract void reportToMainSystem();
+    protected abstract void runATimeUnitBody() throws InterruptedException;
+    protected abstract boolean isSystemFinished();
 }
