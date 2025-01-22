@@ -6,7 +6,7 @@ public class MainSystem {
     public Semaphore[] subSystemWait;
     public StringBuilder[] message;
 
-    public static final int SUBSYSTEM_COUNT = 3;
+    public static final int SUBSYSTEM_COUNT = 4;
     public int time;
 
 

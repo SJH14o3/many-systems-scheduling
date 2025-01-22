@@ -82,7 +82,7 @@ public final class SubSystem2 extends SubSystem {
         }
         owner.message[systemIndex].append("Sub2:\n")
                 .append("    Resources: R1: ").append(R1Remain)
-                .append(", R2: ").append(R2Remain).append("\n    ")
+                .append(", R2: ").append(R2Remain).append("\n   Ready Queue:")
                 .append(readyQueueString());
         for (int i = 0; i < CORE_COUNT; i++) {
             owner.message[systemIndex].append(message[i].toString()).append("\n");

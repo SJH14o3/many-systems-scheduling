@@ -14,6 +14,7 @@ public abstract class Process {
     public static int STATE_RUNNING = 1;
     public static int STATE_WAITING = 2;
 
+
     public String getName() {
         return name;
     }
