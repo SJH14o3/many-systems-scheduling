@@ -1,7 +1,6 @@
 public final class SubSystem3 extends SubSystem {
     public SubSystem3(int intR1Remain, int intR2Remain, Process[] processes, int sys3CoresCount, boolean doNotSendReport) {
-        super(intR1Remain, intR2Remain, processes, sys3CoresCount, doNotSendReport);
-        systemIndex = 2;
+        super(intR1Remain, intR2Remain, processes, sys3CoresCount, doNotSendReport, 2);
     }
 
     @Override

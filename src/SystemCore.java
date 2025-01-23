@@ -8,9 +8,10 @@ public class SystemCore extends Thread {
     public static final int CORE_STATE_TASK_FINISHED = 3;
     public static final int CORE_STATE_STOPPED = 4;
 
-    public SystemCore(int coreIndex) {
+    public SystemCore(int coreIndex, int ownerIndex) {
         this.coreIndex = coreIndex;
         coreState = CORE_STATE_IDLE;
+        setName("Core " + (coreIndex + 1) + "-Subsystem " + (ownerIndex+1));
     }
 
     public int getCoreState() {

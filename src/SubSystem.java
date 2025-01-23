@@ -25,7 +25,7 @@ public abstract class SubSystem extends Thread{
 
     public Process getProcessWithName(String name){
         for (Process process: notArrivedProcesses){
-            if (process.getName() == name){
+            if (process.getName().equals(name)){
                 return process;
             }
         }
@@ -59,7 +59,7 @@ public abstract class SubSystem extends Thread{
         owner = instance;
     }
 
-    public SubSystem(int intR1Remain, int intR2Remain, Process[] processes, int coresCount, boolean dontSendReport) {
+    public SubSystem(int intR1Remain, int intR2Remain, Process[] processes, int coresCount, boolean dontSendReport, int systemIndex) {
         this.R1Remain = intR1Remain;
         this.R2Remain = intR2Remain;
         CORE_COUNT = coresCount;
@@ -70,6 +70,8 @@ public abstract class SubSystem extends Thread{
         subSystemWait = new Semaphore[CORE_COUNT];
         coreThreadWait = new Semaphore[CORE_COUNT];
         message = new StringBuilder[CORE_COUNT];
+        this.systemIndex = systemIndex;
+        setName("SubSystem " + (systemIndex+1) + " Thread");
         for (int i = 0; i < CORE_COUNT; i++) {
             subSystemWait[i] = new Semaphore(0);
             coreThreadWait[i] = new Semaphore(0);

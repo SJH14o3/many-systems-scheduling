@@ -19,8 +19,7 @@ public final class SubSystem2 extends SubSystem {
     }
 
     public SubSystem2(int intR1Remain, int intR2Remain, ProcessSubSystem2[] processes, int coresCount, boolean doNotSendReport) {
-        super(intR1Remain, intR2Remain, processes, coresCount, doNotSendReport);
-        systemIndex = 1;
+        super(intR1Remain, intR2Remain, processes, coresCount, doNotSendReport,1);
         cores = new System2Core[CORE_COUNT];
         readyQueue = new SubSystem2ReadyQueue(this);
         for (int i = 0; i < CORE_COUNT; i++) {

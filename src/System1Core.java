@@ -100,7 +100,7 @@ public class System1Core extends SystemCore{
     }
 
     public System1Core(SubSystem1 owner, int coreIndex) {
-        super(coreIndex);
+        super(coreIndex, owner.systemIndex);
         this.owner = owner;
         readyQueue = new SubSystem1ReadyQueue(this.owner, this);
     }

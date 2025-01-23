@@ -1,23 +1,27 @@
-import java.util.ArrayList;
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.*;
 
 public class SubSystem4 extends SubSystem {
 
-    private final SubSystem4ReadyQueue readyQueue;
-    private final WaitingQueueSub4 waitingQueue;
+    public final SubSystem4ReadyQueue readyQueue;
+    public final WaitingQueueSub4 waitingQueue;
 
     private final System4Core[] cores;
+    private final HashSet<String> finishedTasks; // we will store finished task names here
 
     public SubSystem4(int intR1Remain, int intR2Remain, Process[] processes, int sys4CoresCount, boolean doNotSendReport) {
-        super(intR1Remain, intR2Remain, processes, sys4CoresCount, doNotSendReport);
-        systemIndex = 3;
+        super(intR1Remain, intR2Remain, processes, sys4CoresCount, doNotSendReport,3);
         readyQueue = new SubSystem4ReadyQueue(this);
         waitingQueue = new WaitingQueueSub4(this);
         cores = new System4Core[sys4CoresCount];
+        finishedTasks = new HashSet<>();
         for (int i = 0; i < sys4CoresCount; i++) {
             cores[i] = new System4Core(this,i);
         }
+    }
+
+    public boolean isPrerequisiteDone(ProcessSubSystem4 process) {
+        if (process.getPrerequisite().equals("-")) return true;
+        return finishedTasks.contains(process.getPrerequisite());
     }
 
     @Override
@@ -29,11 +33,10 @@ public class SubSystem4 extends SubSystem {
             }else break;
         }
         for (ProcessSubSystem4 newProcess : newProcesses){
-            if (getProcessWithName(newProcess.getPrerequisite()).getBurstTime() == 0){
-                notArrivedProcesses.remove(newProcess);
+            notArrivedProcesses.remove(newProcess);
+            if (isPrerequisiteDone(newProcess)) {
                 readyQueue.addProcess(newProcess);
-            }else {
-                notArrivedProcesses.remove(newProcess);
+            } else {
                 waitingQueue.addLast(newProcess);
             }
         }
@@ -93,13 +96,7 @@ public class SubSystem4 extends SubSystem {
 
     @Override
     protected void runATimeUnitBody() throws InterruptedException {
-        // phase 2 set cores tasks and wait for cores assigning tasks
-        letCoresRunOnePhase();
-        // phase 3 get report from cores
-        letCoresRunOnePhase();
-        reportToMainSystem();
-        // phase 4 now cores actually run
-        letCoresRunOnePhase();
+        //TODO: implement
     }
 
     @Override

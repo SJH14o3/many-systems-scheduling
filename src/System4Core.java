@@ -5,7 +5,12 @@ public class System4Core extends SystemCore{
 
 
     public System4Core(SubSystem4 owner, int coreIndex) {
-        super(coreIndex);
+        super(coreIndex, owner.systemIndex);
         this.owner = owner;
+    }
+
+    @Override
+    public void run() {
+        //TODO: implement
     }
 }

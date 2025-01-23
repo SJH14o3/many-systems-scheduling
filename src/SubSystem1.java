@@ -46,9 +46,8 @@ public final class SubSystem1 extends SubSystem {
     }
 
     public SubSystem1(int intR1Remain, int intR2Remain, ProcessSubSystem1[] processSubSystem1, int sys1CoresCount, boolean doNotSendReport) {
-        super(intR1Remain, intR2Remain, processSubSystem1, sys1CoresCount, doNotSendReport);
+        super(intR1Remain, intR2Remain, processSubSystem1, sys1CoresCount, doNotSendReport, 0);
         this.processSubSystem1 = processSubSystem1;
-        systemIndex = 0;
         setQuantums();
         //printQs();
         waitingQueue = new WaitingQueueSub1(this);

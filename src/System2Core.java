@@ -10,7 +10,7 @@ public class System2Core extends SystemCore {
     public static final int ALLOCATION_STATE_NOT_ALLOCATED = 2;
 
     public System2Core(SubSystem2 owner, int coreIndex) {
-        super(coreIndex);
+        super(coreIndex, owner.systemIndex);
         this.owner = owner;
         coreState = CORE_STATE_IDLE;
     }
