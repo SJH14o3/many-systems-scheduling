@@ -18,6 +18,11 @@ public class SubSystem4 extends SubSystem {
             cores[i] = new System4Core(this,i);
         }
     }
+    public void addFinishedTask(ProcessSubSystem4 processSubSystem4){
+        synchronized (finishedTasks){
+            finishedTasks.add(processSubSystem4.getName());
+        }
+    }
 
     public boolean isPrerequisiteDone(ProcessSubSystem4 process) {
         if (process.getPrerequisite().equals("-")) return true;
@@ -44,7 +49,7 @@ public class SubSystem4 extends SubSystem {
 
     private String readyQueueString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Ready Queue: [");
+        sb.append("    Ready Queue: [");
         PriorityQueue<ProcessSubSystem4> temp = readyQueue.cloneQueue();
         boolean first = true;
         while (!temp.isEmpty()) {
@@ -67,10 +72,10 @@ public class SubSystem4 extends SubSystem {
             dummyReport();
             return;
         }
-        owner.message[systemIndex].append("Sub4\n")
+        owner.message[systemIndex].append("Sub4:\n")
                 .append("   Resources: R1 ").append(R1Remain)
                 .append(", R2: ").append(R2Remain).append("\n   Waiting Queue:")
-                .append(getQueueContent(waitingQueue.getWaitingList())).append("\n Ready Queue")
+                .append(getQueueContent(waitingQueue.getWaitingList()))
                 .append(readyQueueString());
         for (StringBuilder sb: message){
             owner.message[systemIndex].append(sb.toString()).append("\n");
@@ -96,7 +101,9 @@ public class SubSystem4 extends SubSystem {
 
     @Override
     protected void runATimeUnitBody() throws InterruptedException {
-        //TODO: implement
+        letCoresRunOnePhase();
+        reportToMainSystem();
+        letCoresRunOnePhase();
     }
 
     @Override

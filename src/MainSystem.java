@@ -33,11 +33,11 @@ public class MainSystem {
                 for (Semaphore value : mainThreadWait) {
                     value.acquire();
                 }
+                System.out.println("--------------------");
                 System.out.println("Time: " + time);
                 for (StringBuilder stringBuilder : message) {
                     System.out.println(stringBuilder);
                 }
-                System.out.println("--------------------");
                 time++;
                 for (SubSystem subSystem : subSystems) {
                     if (subSystem.systemState == SubSystem.STATE_FINISHED) {

@@ -2,6 +2,17 @@ public final class ProcessSubSystem4 extends Process {
 
     private String prerequisite;
 
+    public int getRemainingTime() {
+        return remainingTime;
+    }
+
+    public void setRemainingTime(int remainingTime) {
+        this.remainingTime = remainingTime;
+    }
+
+    private int remainingTime;
+
+
     public String getPrerequisite() {
         return prerequisite;
     }
@@ -11,13 +22,14 @@ public final class ProcessSubSystem4 extends Process {
     }
 
     public boolean runForATimeUnit() {
-        burstTime--;
-        return burstTime == 0;
+        remainingTime--;
+        return remainingTime == 0;
     }
 
     public ProcessSubSystem4(String name, int burstTime, int maxR1, int maxR2, int startTime, String prerequisite) {
         super(name, burstTime, maxR1, maxR2, startTime);
         this.prerequisite = prerequisite;
+        remainingTime = burstTime;
     }
 
     public static ProcessSubSystem4 createProcessWithString(String line) {

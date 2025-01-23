@@ -44,9 +44,9 @@ public class Main {
                 }
             }
         }
-        system1 = new SubSystem1(resources[0][0], resources[0][1], subSystem1Processes.toArray(new ProcessSubSystem1[0]), Sys1CoresCount, false);
-        system2 = new SubSystem2(resources[1][0], resources[1][1], subSystem2Processes.toArray(new ProcessSubSystem2[0]), Sys2CoresCount, false);
-        system3 = new SubSystem3(resources[2][0], resources[2][1], subSystem3Processes.toArray(new ProcessSubSystem3[0]), Sys3CoresCount, false);
+        system1 = new SubSystem1(resources[0][0], resources[0][1], subSystem1Processes.toArray(new ProcessSubSystem1[0]), Sys1CoresCount, true);
+        system2 = new SubSystem2(resources[1][0], resources[1][1], subSystem2Processes.toArray(new ProcessSubSystem2[0]), Sys2CoresCount, true);
+        system3 = new SubSystem3(resources[2][0], resources[2][1], subSystem3Processes.toArray(new ProcessSubSystem3[0]), Sys3CoresCount, true);
         system4 = new SubSystem4(resources[3][0], resources[3][1], subSystem4Processes.toArray(new ProcessSubSystem4[0]), Sys4CoresCount, false);
         SubSystem[] subSystems = {system1, system2, system3, system4};
         MainSystem mainSystem = new MainSystem(subSystems);
