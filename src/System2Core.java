@@ -42,14 +42,14 @@ public class System2Core extends SystemCore {
                     } else if (owner.getTaskState() == SubSystem2.TASK_STATE_NEW_ARRIVED && (coreState == CORE_STATE_RUNNING || coreState == CORE_STATE_STALLED)) {
                         // if a new task has arrived, core will check if it has a higher priority
                         // if new task is better, temp won't be null
-                        ProcessSubSystem2 temp = owner.getReadyQueue().checkIfNewProcessHasHigherPriority(currentTask, coreIndex+1);
+                        ProcessSubSystem2 temp = owner.getReadyQueue().checkIfNewProcessHasHigherPriority(currentTask, coreIndex+1, (coreState == ALLOCATION_STATE_ALLOCATED));
                         if (temp != null) {
                             // if task is allocated (not allocated means it was stalled), we need to deallocate it first
                             if (allocationState == ALLOCATION_STATE_ALLOCATED) {
                                 owner.deallocate(currentTask);
                             } else {
                                 // adding a stalled time stamp
-                                currentTask.addWaitingEndStamp(owner.owner.time, coreIndex+1);
+                                //currentTask.addWaitingEndStamp(owner.owner.time, coreIndex+1);
                             }
                             currentTask = temp;
                             owner.allocate(currentTask); // throw an exception if not enough resources are available
@@ -62,7 +62,7 @@ public class System2Core extends SystemCore {
                     if (flag && coreState == CORE_STATE_STALLED) { // checking if task can be allocated again, or it will remain stalled
                         if (allocationState == ALLOCATION_STATE_NOT_ALLOCATED) {
                             owner.allocate(currentTask);
-                            currentTask.addWaitingEndStamp(owner.owner.time, coreIndex+1);
+                            currentTask.addWaitingEndStamp(owner.owner.time-1, coreIndex+1);
                             currentTask.addRunningStartStamp(owner.owner.time);
                         }
                         else {
@@ -93,7 +93,6 @@ public class System2Core extends SystemCore {
                     }
                     currentTask.incrementWaitingTime();
                     owner.message[coreIndex].append("STALLED-").append(currentTask.getName());
-                    System.out.println("*************NAME: " + currentTask.getName());
                     owner.coreThreadWait[coreIndex].acquire();
                 } catch (EmptyQueueException e) {
                     owner.subSystemWait[coreIndex].release();

@@ -60,7 +60,7 @@ public final class ProcessSubSystem2 extends Process {
     public String getFinalReport() {
         StringBuilder finalReport = new StringBuilder(reportStartingDetails());
         finalReport.append(", running details: ");
-        if (name.equals("T22")) {
+        if (name.equals("T22") || name.equals("T23")) {
             System.out.println(runningReport);
         }
         finalReport.append(listToReport(runningReport));
