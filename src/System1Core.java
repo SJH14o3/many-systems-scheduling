@@ -28,6 +28,9 @@ public class System1Core extends SystemCore{
             if (!taskIsFinished) {
                 owner.addBackToCoreReadyQueue(currentTask);
             }
+            else {
+                currentTask.setEndTime(owner.owner.time);
+            }
             owner.deallocate(currentTask);
             currentTask = null;
             coreState = CORE_STATE_IDLE;

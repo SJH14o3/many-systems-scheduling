@@ -29,4 +29,29 @@ public final class ProcessSubSystem1 extends Process {
         return new ProcessSubSystem1(parts[0], Integer.parseInt(parts[1]), Integer.parseInt(parts[2]),
                 Integer.parseInt(parts[3]), Integer.parseInt(parts[4]), Integer.parseInt(parts[5]));
     }
+
+    @Override
+    public void addRunningStartStamp(int time) {
+
+    }
+
+    @Override
+    public void addRunningEndStamp(int time, int coreNumber) {
+
+    }
+
+    @Override
+    public void addWaitingStartStamp(int time) {
+
+    }
+
+    @Override
+    public void addWaitingEndStamp(int time) {
+
+    }
+
+    @Override
+    public String getFinalReport() {
+        return name;
+    }
 }

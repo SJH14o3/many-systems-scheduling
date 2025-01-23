@@ -6,7 +6,6 @@ public class System4Core extends SystemCore{
     private ProcessSubSystem4 currentTask;
 
 
-
     public System4Core(SubSystem4 owner, int coreIndex) {
         super(coreIndex, owner.systemIndex);
         this.owner = owner;
@@ -26,12 +25,13 @@ public class System4Core extends SystemCore{
                         .append("       Running Task: ");
                 if (coreState == CORE_STATE_IDLE){
                     Optional<ProcessSubSystem4> temp = owner.readyQueue.getRunnableProcess();
-                    if (!temp.isPresent()){
+                    if (temp.isEmpty()){
                         temp = owner.waitingQueue.getWaitingProcess();
                     }
                     if (temp.isPresent()){
                         coreState = CORE_STATE_RUNNING;
                         currentTask = temp.get();
+                        currentTask.addRunningStartStamp(owner.owner.time);
                     }
                 }
                 if (currentTask != null){
@@ -44,10 +44,13 @@ public class System4Core extends SystemCore{
                         if (randomNum <= 2){
                             System.out.println("\u001B[31m" + currentTask.getName() + " failed at time " + owner.owner.time + " in core " + (coreIndex+1) + "\u001B[0m");
                             currentTask.setRemainingTime(currentTask.burstTime);
+                            currentTask.incrementFailedCount();
                         }else {
                             owner.addFinishedTask(currentTask);
+                            currentTask.setEndTime(owner.owner.time);
                             coreState = CORE_STATE_IDLE;
                             owner.deallocate(currentTask);
+                            currentTask.addRunningEndStamp(owner.owner.time, (coreIndex+1));
                             currentTask = null;
                         }
                     }

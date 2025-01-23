@@ -20,6 +20,12 @@ public class WaitingQueueSub1 {
         owner = subSystem;
     }
 
+    public void increaseWaitingTimes() {
+        for (ProcessSubSystem1 process: waitingList){
+            process.incrementWaitingTime();
+        }
+    }
+
 
     // get and allocate process
     public ProcessSubSystem1 getWaitingProcess(int targetCPU, boolean affinity) {

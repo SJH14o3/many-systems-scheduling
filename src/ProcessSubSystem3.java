@@ -23,4 +23,29 @@ public final class ProcessSubSystem3 extends Process {
                 Integer.parseInt(parts[3]), Integer.parseInt(parts[4]), Integer.parseInt(parts[5]),
                 Integer.parseInt(parts[6]));
     }
+
+    @Override
+    public void addRunningStartStamp(int time) {
+
+    }
+
+    @Override
+    public void addRunningEndStamp(int time,  int coreNumber) {
+
+    }
+
+    @Override
+    public void addWaitingStartStamp(int time) {
+
+    }
+
+    @Override
+    public void addWaitingEndStamp(int time) {
+
+    }
+
+    @Override
+    public String getFinalReport() {
+        return name;
+    }
 }

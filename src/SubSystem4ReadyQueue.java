@@ -52,6 +52,7 @@ public class SubSystem4ReadyQueue {
                     break;
                 } else {
                     addToWaitingQueue.add(out);
+                    out = null;
                 }
             }
         }

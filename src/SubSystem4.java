@@ -104,6 +104,7 @@ public class SubSystem4 extends SubSystem {
         letCoresRunOnePhase();
         reportToMainSystem();
         letCoresRunOnePhase();
+        waitingQueue.increaseWaitingTimes();
     }
 
     @Override

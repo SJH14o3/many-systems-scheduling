@@ -2,7 +2,6 @@ import java.util.*;
 
 public class WaitingQueueSub4 {
     SubSystem4 owner;
-    //TODO: discuss if we should use a priority queue
     private final PriorityQueue<ProcessSubSystem4> waitingList;
 
 
@@ -12,12 +11,16 @@ public class WaitingQueueSub4 {
 
 
     public void addLast (ProcessSubSystem4 processSubSystem4){
+        processSubSystem4.addWaitingStartStamp(owner.owner.time);
         synchronized (waitingList){
             waitingList.add(processSubSystem4);
         }
     }
 
     public void addAll(List<ProcessSubSystem4> items){
+        for (ProcessSubSystem4 item : items) {
+            item.addWaitingStartStamp(owner.owner.time);
+        }
         synchronized (waitingList){
             // appends to end of the list
             waitingList.addAll(items);
@@ -26,6 +29,12 @@ public class WaitingQueueSub4 {
 
     public boolean isEmpty(){
         return waitingList.isEmpty();
+    }
+
+    public void increaseWaitingTimes() {
+        for (ProcessSubSystem4 process: waitingList){
+            process.incrementWaitingTime();
+        }
     }
 
 
@@ -42,6 +51,7 @@ public class WaitingQueueSub4 {
                 ProcessSubSystem4 processSubSystem4 = temp.poll();
                 if (owner.isPrerequisiteDone(processSubSystem4) && owner.checkAndAllocate(processSubSystem4)){
                     out = processSubSystem4;
+                    out.addWaitingEndStamp(owner.owner.time - 1);
                     waitingList.remove(processSubSystem4);
                     break;
                 }
@@ -51,8 +61,6 @@ public class WaitingQueueSub4 {
     }
 
     // return of process that its prerequisite have been met by finish of input process to be added to ready queue
-    //TODO: call this function when a task is finished
-    //TODO: discuss if we should return all processes or only one or none since we have getWaitingProcess?
     public void backToReadyQueue() {
         LinkedList<ProcessSubSystem4> backToReadyQueue = new LinkedList<>();
         synchronized (waitingList) {
@@ -60,6 +68,7 @@ public class WaitingQueueSub4 {
             while (iterator.hasNext()) {
                 ProcessSubSystem4 temp = iterator.next();
                 if (owner.isPrerequisiteDone(temp) && owner.checkEnoughResource(temp)) {
+                    temp.addWaitingEndStamp(owner.owner.time - 1);
                     backToReadyQueue.add(temp);
                     iterator.remove();
                 }

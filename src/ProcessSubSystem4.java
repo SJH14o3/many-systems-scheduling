@@ -1,6 +1,8 @@
 public final class ProcessSubSystem4 extends Process {
 
     private String prerequisite;
+    private int remainingTime;
+    private int failedCount;
 
     public int getRemainingTime() {
         return remainingTime;
@@ -10,8 +12,6 @@ public final class ProcessSubSystem4 extends Process {
         this.remainingTime = remainingTime;
     }
 
-    private int remainingTime;
-
 
     public String getPrerequisite() {
         return prerequisite;
@@ -19,6 +19,14 @@ public final class ProcessSubSystem4 extends Process {
 
     public void setPrerequisite(String prerequisite) {
         this.prerequisite = prerequisite;
+    }
+
+    public int getFailedCount() {
+        return failedCount;
+    }
+
+    public void incrementFailedCount() {
+        failedCount++;
     }
 
     public boolean runForATimeUnit() {
@@ -36,5 +44,42 @@ public final class ProcessSubSystem4 extends Process {
         String[] parts = line.split(" ");
         return new ProcessSubSystem4(parts[0], Integer.parseInt(parts[1]), Integer.parseInt(parts[2]),
                 Integer.parseInt(parts[3]), Integer.parseInt(parts[4]), parts[5]);
+    }
+
+    @Override
+    public void addRunningStartStamp(int time) {
+        runningReport.append(time);
+    }
+
+    public void addRunningEndStamp(int time, int coreNumber) {
+        runningReport.append("-").append(time).append("-").append(coreNumber);
+    }
+
+    @Override
+    public void addWaitingStartStamp(int time) {
+        waitingReport.append("x").append(time);
+    }
+
+    @Override
+    public void addWaitingEndStamp(int time) {
+        waitingReport.append("-").append(time);
+    }
+
+    @Override
+    public String getFinalReport() {
+        StringBuilder finalReport = new StringBuilder(reportStartingDetails());
+        String[] runTimes = runningReport.toString().split("-");
+        finalReport.append(", ran from ").append(runTimes[0]).append(" to ").append(runTimes[1]).append(" by core ").append(runTimes[2]);
+        finalReport.append(", failed ").append(failedCount).append(" time");
+        if (failedCount > 1) finalReport.append("s");
+        if (waitingReport.isEmpty()) {
+            finalReport.append(", no waiting time");
+        }
+        else {
+            finalReport.append(", total time in waiting queue: ").append(timeInWaitingQueue);
+            finalReport.append(", waited in ");
+            finalReport.append(listToReport(waitingReport));
+        }
+        return finalReport.toString();
     }
 }

@@ -19,7 +19,7 @@ public class SubSystem2ReadyQueue {
         return priorityQueue.isEmpty();
     }
 
-    public ProcessSubSystem2 checkIfNewProcessHasHigherPriority(ProcessSubSystem2 processSubSystem2){
+    public ProcessSubSystem2 checkIfNewProcessHasHigherPriority(ProcessSubSystem2 processSubSystem2, int coreNum){
         ProcessSubSystem2 head;
         synchronized (priorityQueue) {
             head = priorityQueue.peek();
@@ -31,6 +31,7 @@ public class SubSystem2ReadyQueue {
                 return null;
             }
             priorityQueue.poll();
+            processSubSystem2.addRunningEndStamp(owner.owner.time, coreNum);
             priorityQueue.add(processSubSystem2);
         }
         return head;
