@@ -37,12 +37,11 @@ public class System2Core extends SystemCore {
                         owner.allocate(currentTask); // if there are not enough resources, NotEnoughResourcesException is thrown
                         allocationState = ALLOCATION_STATE_ALLOCATED; // if we are here, task has been successfully allocated
                         coreState = CORE_STATE_RUNNING;
-                        currentTask.addRunningStartStamp(owner.owner.time);
                         flag = false;
                     } else if (owner.getTaskState() == SubSystem2.TASK_STATE_NEW_ARRIVED && (coreState == CORE_STATE_RUNNING || coreState == CORE_STATE_STALLED)) {
                         // if a new task has arrived, core will check if it has a higher priority
                         // if new task is better, temp won't be null
-                        ProcessSubSystem2 temp = owner.getReadyQueue().checkIfNewProcessHasHigherPriority(currentTask, coreIndex+1, (coreState == ALLOCATION_STATE_ALLOCATED));
+                        ProcessSubSystem2 temp = owner.getReadyQueue().checkIfNewProcessHasHigherPriority(currentTask);
                         if (temp != null) {
                             // if task is allocated (not allocated means it was stalled), we need to deallocate it first
                             if (allocationState == ALLOCATION_STATE_ALLOCATED) {
@@ -53,7 +52,6 @@ public class System2Core extends SystemCore {
                             }
                             currentTask = temp;
                             owner.allocate(currentTask); // throw an exception if not enough resources are available
-                            currentTask.addRunningStartStamp(owner.owner.time); // if we are here, task has been allocated and can run
                             allocationState = ALLOCATION_STATE_ALLOCATED;
                             coreState = CORE_STATE_RUNNING;
                             flag = false;
@@ -62,8 +60,6 @@ public class System2Core extends SystemCore {
                     if (flag && coreState == CORE_STATE_STALLED) { // checking if task can be allocated again, or it will remain stalled
                         if (allocationState == ALLOCATION_STATE_NOT_ALLOCATED) {
                             owner.allocate(currentTask);
-                            currentTask.addWaitingEndStamp(owner.owner.time-1, coreIndex+1);
-                            currentTask.addRunningStartStamp(owner.owner.time);
                         }
                         else {
                             System.out.println("******************MARKER!!! for core " + (coreIndex+1));
@@ -76,11 +72,10 @@ public class System2Core extends SystemCore {
                     // phase two : now actually run
                     owner.coreThreadWait[coreIndex].acquire();
                     // simulate running and checking if task is finished
-                    if (currentTask.runForATimeUnit()) {
+                    if (currentTask.runForATimeUnit(owner.owner.time, coreIndex+1)) {
                         coreState = CORE_STATE_IDLE;
                         owner.deallocate(currentTask);
                         currentTask.setEndTime(owner.owner.time);
-                        currentTask.addRunningEndStamp(owner.owner.time, coreIndex+1);
                         allocationState = ALLOCATION_STATE_NOT_ALLOCATED;
                         currentTask = null;
                     }
@@ -88,10 +83,8 @@ public class System2Core extends SystemCore {
                     owner.subSystemWait[coreIndex].release();
                     coreState = CORE_STATE_STALLED;
                     allocationState = ALLOCATION_STATE_NOT_ALLOCATED;
-                    if (currentTask.isStalledJustNow()) {
-                        currentTask.addWaitingStartStamp(owner.owner.time);
-                    }
                     currentTask.incrementWaitingTime();
+                    currentTask.addWaitingStartStamp(owner.owner.time, coreIndex+1);
                     owner.message[coreIndex].append("STALLED-").append(currentTask.getName());
                     owner.coreThreadWait[coreIndex].acquire();
                 } catch (EmptyQueueException e) {

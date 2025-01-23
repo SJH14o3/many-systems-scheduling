@@ -42,7 +42,7 @@ public class SubSystem4 extends SubSystem {
             if (isPrerequisiteDone(newProcess)) {
                 readyQueue.addProcess(newProcess);
             } else {
-                waitingQueue.addLast(newProcess);
+                waitingQueue.addProcess(newProcess);
             }
         }
     }

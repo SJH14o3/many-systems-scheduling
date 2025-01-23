@@ -17,8 +17,9 @@ public final class ProcessSubSystem2 extends Process {
                 Integer.parseInt(parts[3]), Integer.parseInt(parts[4]));
     }
 
-    public boolean runForATimeUnit() {
+    public boolean runForATimeUnit(int time, int coreNum) {
         remainingTime--;
+        addRunningStartStamp(time, coreNum);
         return remainingTime == 0;
     }
 
@@ -32,45 +33,45 @@ public final class ProcessSubSystem2 extends Process {
 
     @Override
     public void addRunningStartStamp(int time) {
-        runningReport.append("x").append(time);
+
+    }
+
+    public void addRunningStartStamp(int time, int coreNumber) {
+        runningReport.append(",").append(time).append(":").append(coreNumber);
     }
 
     @Override
     public void addRunningEndStamp(int time, int coreNumber) {
-        runningReport.append("-").append(time).append("-").append(coreNumber);
+
     }
 
     // weird but we use waiting queue report for stall report since we don't have a waiting queue
     @Override
     public void addWaitingStartStamp(int time) {
-        waitingReport.append("x").append(time);
+
     }
 
-    public void addWaitingEndStamp(int time, int coreNumber) {
-        waitingReport.append("-").append(time).append("-").append(coreNumber);
-        isStalled = false;
+    public void addWaitingStartStamp(int time, int coreNumber) {
+        waitingReport.append(",").append(time).append(":").append(coreNumber);
     }
 
     @Override
     public void addWaitingEndStamp(int time) {
-        waitingReport.append("-").append(time);
+
     }
 
     @Override
     public String getFinalReport() {
         StringBuilder finalReport = new StringBuilder(reportStartingDetails());
-        finalReport.append(", running details: ");
-        if (name.equals("T22") || name.equals("T23")) {
-            System.out.println(runningReport);
-        }
-        finalReport.append(listToReport(runningReport));
+        finalReport.append(", ran in ");
+        finalReport.append(consecutiveDecoder(runningReport));
         if (waitingReport.isEmpty()) {
             finalReport.append(", didn't stall");
         }
         else {
             finalReport.append(", total time stalled: ").append(timeInWaitingQueue);
             finalReport.append(", stalled in ");
-            finalReport.append(listToReport(waitingReport));
+            finalReport.append(consecutiveDecoder(waitingReport));
         }
         return finalReport.toString();
     }

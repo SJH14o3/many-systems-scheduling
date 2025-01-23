@@ -14,8 +14,9 @@ public final class ProcessSubSystem1 extends Process {
         return targetCPU;
     }
 
-    public boolean runForATimeUnit() {
+    public boolean runForATimeUnit(int time, int coreNum) {
         burstTime--;
+        addRunningStartStamp(time, coreNum);
         return burstTime == 0;
     }
 
@@ -40,9 +41,13 @@ public final class ProcessSubSystem1 extends Process {
 
     }
 
+    public void addRunningStartStamp(int time, int coreNumber) {
+        runningReport.append(",").append(time).append(":").append(coreNumber);
+    }
+
     @Override
     public void addWaitingStartStamp(int time) {
-
+        waitingReport.append(",").append(time);
     }
 
     @Override
@@ -52,6 +57,17 @@ public final class ProcessSubSystem1 extends Process {
 
     @Override
     public String getFinalReport() {
-        return name;
+        StringBuilder finalReport = new StringBuilder(reportStartingDetails());
+        finalReport.append(", ran in ");
+        finalReport.append(consecutiveDecoder(runningReport));
+        if (waitingReport.isEmpty()) {
+            finalReport.append(", no time in waiting queue");
+        }
+        else {
+            finalReport.append(", total time in waiting queue: ").append(timeInWaitingQueue);
+            finalReport.append(", appeared in waiting in ");
+            finalReport.append(consecutiveDecoderNoCore(waitingReport));
+        }
+        return finalReport.toString();
     }
 }

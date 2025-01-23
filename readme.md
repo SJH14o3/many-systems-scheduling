@@ -28,3 +28,17 @@ if ready queue is empty and core tried to get a task from it, it will be idle an
 if task is allocated successfully, then it will be run for one time unit.
 if remain time of task reaches 0, it will be deallocated be removed from the core.
 system will be finished when all task are finished.
+
+## Subsystem 3
+
+### how does it work?
+
+## Subsystem 4
+This system has 2 cores, a Ready queue a Waiting queue. scheduler for this system uses FCFS. In this system, some task has a prerequisite and if their prerequisite is not finished, they cannot run.
+
+### how does it work?
+first in every time unit, sub system will check if new processes have arrived, if there are, they will be added to the ready queue if their prerequisite is complete
+if not it will be added to waiting queue instead. both queues use a priority queue with lower arrival time as priority.
+[note that for allocating for this system we added a function that would check if task can be assigned and if it can, it will be allocated there, the whole process is inside a synchronized block]
+if core is not idle then it would run for a time unit since task is already allocated.
+if a core is idle, it will get a process from ready queue by polling a process as long as a process can be allocated or queue get's empty. all the removed processes that could not be allocated will be moved to waiting queue. if we could poll a process from ready queue we check waiting queue. we clone it's priority queue first then start polling out processes until a process that can be allocated and it's prerequisite is finished is found. if no such process is found then core will be idle. if we have a process then it will ran until is finished. when is finished, all of the task that had the finished task as prerequisite will come back to ready queue. system will finished when all tasks are done and no new task is coming and queues are empty.

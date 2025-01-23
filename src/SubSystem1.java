@@ -136,6 +136,7 @@ public final class SubSystem1 extends SubSystem {
         // phase 3 get report from cores
         letCoresRunOnePhase();
         reportToMainSystem();
+        waitingQueue.increaseWaitingTimes(owner.time);
         // phase 4 now cores actually run
         letCoresRunOnePhase();
     }

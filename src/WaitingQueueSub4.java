@@ -10,7 +10,7 @@ public class WaitingQueueSub4 {
     }
 
 
-    public void addLast (ProcessSubSystem4 processSubSystem4){
+    public void addProcess(ProcessSubSystem4 processSubSystem4){
         processSubSystem4.addWaitingStartStamp(owner.owner.time);
         synchronized (waitingList){
             waitingList.add(processSubSystem4);

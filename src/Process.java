@@ -72,6 +72,83 @@ public abstract class Process {
         timeInWaitingQueue++;
     }
 
+    private String createPartialReportString(int start, int end , int core) {
+        return " " + start + " to " + end + " in core " + core;
+    }
+
+    public String consecutiveDecoder(StringBuilder in) {
+        String[] entries = in.substring(1).split(",");
+        StringBuilder result = new StringBuilder("[ ");
+
+        int start = -1;
+        int end = -1;
+        int prevCore = -1;
+        boolean firstEntry = true;
+
+        for (String entry : entries) {
+            if (entry.isEmpty()) continue;
+
+            String[] parts = entry.split(":");
+            int time = Integer.parseInt(parts[0]);
+            int core = Integer.parseInt(parts[1]);
+
+            if (firstEntry) {
+                start = time;
+                prevCore = core;
+                firstEntry = false;
+            }
+
+            if (core != prevCore || time != end + 1) {
+                if (end != -1) {
+                    result.append(start).append(" to ").append(end).append(" in core ").append(prevCore).append(", ");
+                }
+                start = time;
+                prevCore = core;
+            }
+
+            end = time;
+        }
+
+        if (start != -1 && end != -1) {
+            result.append(start).append(" to ").append(end).append(" in core ").append(prevCore);
+        }
+
+        return result + " ]";
+    }
+
+    public String consecutiveDecoderNoCore(StringBuilder in) {
+        String[] entries = in.substring(1).split(",");
+        StringBuilder result = new StringBuilder("[ ");
+
+        int start = -1;
+        int end = -1;
+        boolean firstEntry = true;
+
+        for (String entry : entries) {
+            if (entry.isEmpty()) continue;
+            int time = Integer.parseInt(entry);
+
+            if (firstEntry) {
+                start = time;
+                firstEntry = false;
+            }
+
+            if (time != end + 1) {
+                if (end != -1) {
+                    result.append(start).append(" to ").append(end).append(", ");
+                }
+                start = time;
+            }
+
+            end = time;
+        }
+
+        if (start != -1 && end != -1) {
+            result.append(start).append(" to ").append(end);
+        }
+        return result + " ]";
+    }
+
     public String listToReport(StringBuilder in) {
         String[] reports = in.substring(1).split("x");
         StringBuilder out = new StringBuilder("[");

@@ -20,9 +20,10 @@ public class WaitingQueueSub1 {
         owner = subSystem;
     }
 
-    public void increaseWaitingTimes() {
+    public void increaseWaitingTimes(int time) {
         for (ProcessSubSystem1 process: waitingList){
             process.incrementWaitingTime();
+            process.addWaitingStartStamp(time);
         }
     }
 

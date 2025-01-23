@@ -22,7 +22,7 @@ public class System1Core extends SystemCore{
 
     private void runForATimeUnit() {
         remainingQuantum--;
-        boolean taskIsFinished = currentTask.runForATimeUnit();
+        boolean taskIsFinished = currentTask.runForATimeUnit(owner.owner.time, coreIndex+1);
         boolean bool = remainingQuantum == 0 || taskIsFinished;
         if (bool) {
             if (!taskIsFinished) {
