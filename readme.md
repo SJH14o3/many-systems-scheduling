@@ -36,11 +36,11 @@ if task is allocated successfully, then it will be run for one time unit.
 if remain time of task reaches 0, it will be deallocated be removed from the core.
 system will be finished when all task are finished.
 
-##Subsystem 3
+## Subsystem 3
 This system has one core, one Ready queue and no Waiting queue. this is a hard real time system and scheduler uses Rate Monotonic.
 In this system, a special case for this system is that even though we have one core, a process might need more resources that this system has and we need to lend resources from other systems. we determines the max needed R1 and R2 and lend the needed resources from other systems in a circular manner by picking 1 resource at a time. we do this at the start because there is a possibility that maybe not enough resources are available to lend, we do this at the start of program before allocating any task. when we don't need the additional resource, we return it to the original system. when system has got additional resources, it would run twice as other system, we call it overclock state. we simulate the core running for a time unit twice in that state. it goes back to normal when resources are returned. the ready queue is prioritized by period length.
 
-###how does it work?
+### how does it work?
 first in every time unit, we check if new process has arrived and we add it to ready queue. if there wasn't a running task we assign one from ready queue. if core was running we check if top of queue has a higher priority than current task and bring the top to the core if the condition is met. if there is a assigned task, thankfully we don't need to worry about resources on this system. we would run the assigned task and if it's done if it must be ran again we bring it back to the not-Arrived-Tasks list with a new arrival time. system is finished when tasks have ran for the amount they needed to be run.
 
 ## Subsystem 4
