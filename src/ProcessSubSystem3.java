@@ -1,6 +1,7 @@
 public final class ProcessSubSystem3 extends Process {
     private final int period;
     private int reoccurrence;
+    private int nextDeadline;
 
 
     public int getPeriod() {
@@ -9,6 +10,18 @@ public final class ProcessSubSystem3 extends Process {
 
     public int getReoccurrence() {
         return reoccurrence;
+    }
+
+    public int getNextDeadline() {
+        return nextDeadline;
+    }
+
+    public void setNextDeadline(int nextDeadline) {
+        this.nextDeadline = nextDeadline;
+    }
+
+    public void setReoccurrence(int reoccurrence) {
+        this.reoccurrence = reoccurrence;
     }
 
     public ProcessSubSystem3(String name, int burstTime, int maxR1, int maxR2, int startTime, int period, int reoccurrence) {

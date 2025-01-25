@@ -3,13 +3,12 @@ import java.util.LinkedList;
 import java.util.Scanner;
 
 public class Main {
-
-
     public static final int systemCount = 4;
     public static final int Sys1CoresCount = 3;
     public static final int Sys2CoresCount = 2;
     public static final int Sys3CoresCount = 1;
     public static final int Sys4CoresCount = 2;
+
     public static void main(String[] args) {
         ArrayList<ProcessSubSystem1> subSystem1Processes = new ArrayList<>();
         ArrayList<ProcessSubSystem2> subSystem2Processes = new ArrayList<>();

@@ -3,6 +3,7 @@ import Exceptions.NotEnoughResourcesException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Optional;
 import java.util.concurrent.Semaphore;
 
 public abstract class SubSystem extends Thread{
@@ -118,6 +119,34 @@ public abstract class SubSystem extends Thread{
             }
         }
         return out;
+    }
+
+    // is called when cores are not running so no synchronization is required
+    public Optional<Resource> lendResource(int resource) {
+        if (resource == 1) {
+            if (R1Remain > 0) {
+                R1Remain--;
+                return Optional.of(new Resource(1, systemIndex));
+            }
+        }
+        else {
+            if (R2Remain > 0) {
+                R2Remain--;
+                return Optional.of(new Resource(2, systemIndex));
+            }
+        }
+        return Optional.empty();
+    }
+
+    public void getResourceBack(int resource) {
+        synchronized (this) {
+            if (resource == 1) {
+                R1Remain++;
+            }
+            else {
+                R2Remain++;
+            }
+        }
     }
 
     protected void dummyReport() {
