@@ -1,4 +1,5 @@
 import java.util.LinkedList;
+import java.util.Optional;
 import java.util.concurrent.Semaphore;
 
 public class MainSystem {
@@ -6,6 +7,7 @@ public class MainSystem {
     public Semaphore[] mainThreadWait;
     public Semaphore[] subSystemWait;
     public StringBuilder[] message;
+
 
     public static final int SUBSYSTEM_COUNT = 4;
     public int time;
@@ -24,9 +26,26 @@ public class MainSystem {
         }
     }
 
-    public void lendResourceToSubsystem3(int neededR1, int neededR2) {
-        LinkedList<Resource> R1 = new LinkedList<>();
-        LinkedList<Resource> R2 = new LinkedList<>();
+    public LinkedList<Resource> lendResourceToSubsystem3(int neededR1, int neededR2) {
+        LinkedList<Resource> out = new LinkedList<>();
+        int i = 2;
+        for (;neededR1 != 0 ; i = (i+1) % SUBSYSTEM_COUNT) {
+            if (i == 2) continue;
+            Optional<Resource> temp = subSystems[i].lendResource(1);
+            if (temp.isPresent()) {
+                out.add(temp.get());
+                neededR1--;
+            }
+        }
+        for (;neededR2 != 0 ; i = (i+1) % SUBSYSTEM_COUNT) {
+            if (i == 2) continue;
+            Optional<Resource> temp = subSystems[i].lendResource(2);
+            if (temp.isPresent()) {
+                out.add(temp.get());
+                neededR2--;
+            }
+        }
+        return out;
     }
 
     public void lendBackResource(LinkedList<Resource> resources) {

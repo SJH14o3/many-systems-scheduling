@@ -54,6 +54,7 @@ public class Main {
             subSystem.setOwner(mainSystem);
         }
         try {
+            system3.lendResource();
             mainSystem.start();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);

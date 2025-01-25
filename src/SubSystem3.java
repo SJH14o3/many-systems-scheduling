@@ -1,12 +1,29 @@
+import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.LinkedList;
 
 public final class SubSystem3 extends SubSystem {
     private ArrayList<ProcessSubSystem3> sortedByR1;
     private ArrayList<ProcessSubSystem3> sortedByR2;
+    private int maxR1;
+    private int maxR2;
+    private final System3Core[] core;
+
+    public SubSystem3ReadyQueue subSystem3ReadyQueue;
+    private LinkedList<Resource> resource1;
+    private LinkedList<Resource> resource2;
+
+    private boolean isOverClocked = true;
+
     public SubSystem3(int intR1Remain, int intR2Remain, Process[] processes, int sys3CoresCount, boolean doNotSendReport) {
         super(intR1Remain, intR2Remain, processes, sys3CoresCount, doNotSendReport, 2);
         sortProcessesByResources(processes);
+        resource1 = new LinkedList<>();
+        resource2 = new LinkedList<>();
+        subSystem3ReadyQueue = new SubSystem3ReadyQueue();
+        core = new System3Core[1];
+        core[0] = new System3Core(0,this);
     }
 
     public void sortProcessesByResources(Process[] processes) {
@@ -16,13 +33,39 @@ public final class SubSystem3 extends SubSystem {
             sortedByR1.add((ProcessSubSystem3) process);
             sortedByR2.add((ProcessSubSystem3) process);
         }
-        sortedByR1.sort(Comparator.comparingInt(ProcessSubSystem3::getMaxR1));
-        sortedByR2.sort(Comparator.comparingInt(ProcessSubSystem3::getMaxR2));
+        sortedByR1.sort(Comparator.comparingInt(ProcessSubSystem3::getMaxR1).reversed());
+        sortedByR2.sort(Comparator.comparingInt(ProcessSubSystem3::getMaxR2).reversed());
+        maxR1 = sortedByR1.get(0).maxR1;
+        maxR2 = sortedByR2.get(0).maxR2;
+
     }
 
+
+    public void lendResource(){
+        int neededR1 = (Math.max(maxR1 - R1Remain, 0));
+        int neededR2 = (Math.max(maxR2-R2Remain,0));
+        LinkedList<Resource> resourceLinkedList = new LinkedList<>();
+        resourceLinkedList = owner.lendResourceToSubsystem3(neededR1,neededR2);
+        for (Resource resource: resourceLinkedList){
+            if (resource.type() == 1){
+                resource1.add(resource);
+            }else {
+                resource2.add(resource);
+            }
+        }
+    }
     @Override
     protected void checkForNewProcesses() {
-        //TODO: implement
+        ArrayList<Process> newProcesses = new ArrayList<>();
+        for (Process notArrivedProcess : notArrivedProcesses){
+            if (notArrivedProcess.startTime == owner.time){
+                newProcesses.add(notArrivedProcess);
+            }else break;
+        }
+        for (Process newProcess : newProcesses){
+            notArrivedProcesses.remove(newProcess);
+            subSystem3ReadyQueue.addProcess((ProcessSubSystem3) newProcess);
+        }
     }
 
     @Override
@@ -32,42 +75,18 @@ public final class SubSystem3 extends SubSystem {
 
     @Override
     protected void runATimeUnitBody() throws InterruptedException {
-        //TODO: implement
+        if (isOverClocked){
+
+        }
     }
 
     @Override
     protected boolean isSystemFinished() {
-        //TODO: implement
-        return false;
+        return (subSystem3ReadyQueue.isEmpty() && notArrivedProcesses.isEmpty() && core[0].getCoreState() == SystemCore.CORE_STATE_IDLE ) ;
     }
 
     @Override
     public void run() { //TODO: move this function after implementation to runLoop, like other systems
-        try {
-            while (true) {
-                //TODO: remove with actual job
-                owner.message[systemIndex].setLength(0);
-                owner.message[systemIndex].append("Sub3:");
-                if (owner.time == 6) { //TODO: replace with actual finish statement
-                    systemState = STATE_FINISHED;
-                    owner.mainThreadWait[systemIndex].release();
-                    break;
-                }
-                owner.mainThreadWait[systemIndex].release();
-                owner.subSystemWait[systemIndex].acquire();
-            }
-            //TODO: task is finished here
-            while(true) {
-                owner.subSystemWait[systemIndex].acquire();
-                if (systemState == STATE_STOPPED) {
-                    break;
-                }
-                owner.message[systemIndex].setLength(0);
-                owner.message[systemIndex].append("Sub3 is finished");
-                owner.mainThreadWait[systemIndex].release();
-            }
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        runLoop(core);
     }
 }

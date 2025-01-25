@@ -7,7 +7,7 @@ public class SubSystem3ReadyQueue {
     private PriorityQueue<ProcessSubSystem3> queue;
 
     public SubSystem3ReadyQueue() {
-        queue = new PriorityQueue<>(Comparator.comparingInt(ProcessSubSystem3::getNextDeadline));
+        queue = new PriorityQueue<>(Comparator.comparingInt(ProcessSubSystem3::getPeriod).reversed());
     }
 
     public ProcessSubSystem3 pollProcess() {
@@ -16,6 +16,9 @@ public class SubSystem3ReadyQueue {
 
     public void addProcess(ProcessSubSystem3 process) {
         queue.add(process);
+    }
+    public boolean isEmpty(){
+        return queue.isEmpty();
     }
 
     public Optional<ProcessSubSystem3> checkForHigherPriority(ProcessSubSystem3 process) {
