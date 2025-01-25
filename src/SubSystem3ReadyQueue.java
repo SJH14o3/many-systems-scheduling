@@ -33,4 +33,8 @@ public class SubSystem3ReadyQueue {
         }
         return Optional.empty();
     }
+    public PriorityQueue<ProcessSubSystem3> cloneQueue(){
+        return new PriorityQueue<>(queue);
+    }
+
 }

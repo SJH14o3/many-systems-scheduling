@@ -2,6 +2,7 @@ import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 
 public final class SubSystem3 extends SubSystem {
     private ArrayList<ProcessSubSystem3> sortedByR1;
@@ -68,9 +69,38 @@ public final class SubSystem3 extends SubSystem {
         }
     }
 
+
+    private String readyQueueString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Ready Queue: [");
+        PriorityQueue<ProcessSubSystem3> temp = subSystem3ReadyQueue.cloneQueue();
+        boolean first = true;
+        while (!temp.isEmpty()) {
+            if (first) {
+                first = false;
+            } else {
+                sb.append(", ");
+            }
+            ProcessSubSystem3 process = temp.poll();
+            sb.append(process.getName());
+        }
+        sb.append("]\n");
+        return sb.toString();
+    }
     @Override
     protected void reportToMainSystem() {
-        //TODO: implement
+        owner.message[systemIndex].setLength(0);
+        if (dontSendReport) {
+            dummyReport();
+            return;
+        }
+        owner.message[systemIndex].append("Sub3:\n")
+                .append("    Resources: R1: ").append(R1Remain)
+                .append(", R2: ").append(R2Remain).append("\n   Ready Queue:")
+                .append(readyQueueString());
+        for (int i = 0; i < CORE_COUNT; i++) {
+            owner.message[systemIndex].append(message[i].toString()).append("\n");
+        }
     }
 
     @Override
