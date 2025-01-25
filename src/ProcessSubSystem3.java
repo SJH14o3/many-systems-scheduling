@@ -97,7 +97,7 @@ public final class ProcessSubSystem3 extends Process {
 
             if (core != prevCore || (time != end + 1 && time != end + 0.1 )) {
                 if (end != -1) {
-                    result.append(start).append(" to ").append(end).append(" in core ").append(prevCore).append(", ");
+                    result.append(start).append(", ");
                 }
                 start = time;
                 prevCore = core;
