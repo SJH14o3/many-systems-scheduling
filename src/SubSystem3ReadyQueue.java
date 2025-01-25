@@ -7,7 +7,7 @@ public class SubSystem3ReadyQueue {
     private PriorityQueue<ProcessSubSystem3> queue;
 
     public SubSystem3ReadyQueue() {
-        queue = new PriorityQueue<>(Comparator.comparingInt(ProcessSubSystem3::getPeriod).reversed());
+        queue = new PriorityQueue<>(Comparator.comparingInt(ProcessSubSystem3::getPeriod));
     }
 
     public ProcessSubSystem3 pollProcess() {
@@ -26,7 +26,7 @@ public class SubSystem3ReadyQueue {
             return Optional.empty();
         }
         ProcessSubSystem3 top = queue.peek();
-        if (top.getNextDeadline() < process.getNextDeadline()) {
+        if (top.getPeriod() < process.getPeriod()) {
             queue.poll();
             queue.add(process);
             return Optional.of(top);

@@ -1,0 +1,1454 @@
+--------------------
+Time: 0
+Sub1:
+    Resources: R1: 2, R2: 4
+    Waiting Queue:[]
+    Core1:
+       Running Task:T11
+       Ready Queue: []
+    Core2:
+       Running Task:IDLE
+       Ready Queue: []
+    Core3:
+       Running Task:IDLE
+       Ready Queue: []
+
+Sub2:
+    Resources: R1: 6, R2: 5
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: IDLE
+    Core2:
+       Running Task: IDLE
+
+Sub3 at sub time 1:
+    Resources: R1: 7, R2: 6
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: IDLE
+Sub3 at sub time 2:
+    Resources: R1: 7, R2: 6
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: IDLE
+
+Sub4:
+   Resources: R1 3, R2: 4
+   Waiting Queue:[]
+    Ready Queue: []
+    Core1:
+       Running Task: IDLE
+    Core2:
+       Running Task: IDLE
+
+next start time for T31 is : 8
+--------------------
+Time: 1
+Sub1:
+    Resources: R1: 2, R2: 3
+    Waiting Queue:[T18]
+    Core1:
+       Running Task:T11
+       Ready Queue: []
+    Core2:
+       Running Task:T12
+       Ready Queue: []
+    Core3:
+       Running Task:IDLE
+       Ready Queue: []
+
+Sub2:
+    Resources: R1: 4, R2: 2
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T22
+    Core2:
+       Running Task: IDLE
+
+Sub3 at sub time 1:
+    Resources: R1: 0, R2: 1
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T31
+Sub3 at sub time 2:
+    Resources: R1: 0, R2: 1
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T31
+
+Sub4:
+   Resources: R1 3, R2: 4
+   Waiting Queue:[]
+    Ready Queue: []
+    Core1:
+       Running Task: IDLE
+    Core2:
+       Running Task: IDLE
+
+--------------------
+Time: 2
+Sub1:
+    Resources: R1: 0, R2: 3
+    Waiting Queue:[T18]
+    Core1:
+       Running Task:T11
+       Ready Queue: [T14]
+    Core2:
+       Running Task:T12
+       Ready Queue: []
+    Core3:
+       Running Task:T13
+       Ready Queue: [T16,T19]
+
+Sub2:
+    Resources: R1: 5, R2: 1
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T23
+    Core2:
+       Running Task: STALLED-T22
+
+Sub3 at sub time 1:
+    Resources: R1: 7, R2: 6
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: IDLE
+Sub3 at sub time 2:
+    Resources: R1: 7, R2: 6
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: IDLE
+
+Sub4:
+   Resources: R1 3, R2: 4
+   Waiting Queue:[]
+    Ready Queue: []
+    Core1:
+       Running Task: IDLE
+    Core2:
+       Running Task: IDLE
+
+--------------------
+Time: 3
+Sub1:
+    Resources: R1: 0, R2: 3
+    Waiting Queue:[T18]
+    Core1:
+       Running Task:T11
+       Ready Queue: [T14]
+    Core2:
+       Running Task:T12
+       Ready Queue: [T15]
+    Core3:
+       Running Task:T13
+       Ready Queue: [T16,T19]
+
+Sub2:
+    Resources: R1: 5, R2: 1
+   Ready Queue:Ready Queue: [T24]
+    Core1:
+       Running Task: T23
+    Core2:
+       Running Task: STALLED-T22
+
+Sub3 at sub time 1:
+    Resources: R1: 7, R2: 6
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: IDLE
+Sub3 at sub time 2:
+    Resources: R1: 7, R2: 6
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: IDLE
+
+Sub4:
+   Resources: R1 3, R2: 4
+   Waiting Queue:[]
+    Ready Queue: []
+    Core1:
+       Running Task: IDLE
+    Core2:
+       Running Task: IDLE
+
+--------------------
+Time: 4
+Sub1:
+    Resources: R1: 0, R2: 0
+    Waiting Queue:[T14]
+    Core1:
+       Running Task:T11
+       Ready Queue: [T17]
+    Core2:
+       Running Task:T18
+       Ready Queue: [T15,T12]
+    Core3:
+       Running Task:T13
+       Ready Queue: [T16,T19]
+
+Sub2:
+    Resources: R1: 3, R2: 1
+   Ready Queue:Ready Queue: [T24]
+    Core1:
+       Running Task: T26
+    Core2:
+       Running Task: T22
+
+Sub3 at sub time 1:
+    Resources: R1: 7, R2: 6
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: IDLE
+Sub3 at sub time 2:
+    Resources: R1: 7, R2: 6
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: IDLE
+
+Sub4:
+   Resources: R1 3, R2: 4
+   Waiting Queue:[T46]
+    Ready Queue: []
+    Core1:
+       Running Task: IDLE
+    Core2:
+       Running Task: IDLE
+
+--------------------
+Time: 5
+Sub1:
+    Resources: R1: 0, R2: 0
+    Waiting Queue:[T14]
+    Core1:
+       Running Task:T11
+       Ready Queue: [T17]
+    Core2:
+       Running Task:T18
+       Ready Queue: [T15,T12]
+    Core3:
+       Running Task:T13
+       Ready Queue: [T16,T19]
+
+Sub2:
+    Resources: R1: 4, R2: 1
+   Ready Queue:Ready Queue: [T24, T21]
+    Core1:
+       Running Task: T25
+    Core2:
+       Running Task: T22
+
+Sub3 at sub time 1:
+    Resources: R1: 5, R2: 3
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T32
+Sub3 at sub time 2:
+    Resources: R1: 5, R2: 3
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T32
+
+Sub4:
+   Resources: R1 3, R2: 4
+   Waiting Queue:[T46,T41]
+    Ready Queue: []
+    Core1:
+       Running Task: IDLE
+    Core2:
+       Running Task: IDLE
+
+next start time for T32 is : 13
+--------------------
+Time: 6
+Sub1:
+    Resources: R1: 0, R2: 0
+    Waiting Queue:[T14,T17]
+    Core1:
+       Running Task:T11
+       Ready Queue: []
+    Core2:
+       Running Task:T18
+       Ready Queue: [T15,T12]
+    Core3:
+       Running Task:T13
+       Ready Queue: [T16,T19]
+
+Sub2:
+    Resources: R1: 4, R2: 1
+   Ready Queue:Ready Queue: [T24, T21]
+    Core1:
+       Running Task: T25
+    Core2:
+       Running Task: T22
+
+Sub3 at sub time 1:
+    Resources: R1: 5, R2: 3
+   Ready Queue:Ready Queue: [T33]
+    Core1:
+       Running Task: T32
+Sub3 at sub time 2:
+    Resources: R1: 5, R2: 3
+   Ready Queue:Ready Queue: [T33]
+    Core1:
+       Running Task: T32
+
+Sub4:
+   Resources: R1 1, R2: 3
+   Waiting Queue:[T46,T41]
+    Ready Queue: []
+    Core1:
+       Running Task: T44
+    Core2:
+       Running Task: IDLE
+
+--------------------
+Time: 7
+Sub1:
+    Resources: R1: 1, R2: 0
+    Waiting Queue:[T14,T17]
+    Core1:
+       Running Task:T12
+       Ready Queue: []
+    Core2:
+       Running Task:T15
+       Ready Queue: [T18]
+    Core3:
+       Running Task:T16
+       Ready Queue: [T19,T13]
+
+Sub2:
+    Resources: R1: 4, R2: 2
+   Ready Queue:Ready Queue: [T21]
+    Core1:
+       Running Task: T25
+    Core2:
+       Running Task: T24
+
+Sub3 at sub time 1:
+    Resources: R1: 2, R2: 0
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T33
+Sub3 at sub time 2:
+    Resources: R1: 2, R2: 0
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T33
+
+Sub4:
+   Resources: R1 1, R2: 3
+   Waiting Queue:[T46,T41,T42]
+    Ready Queue: []
+    Core1:
+       Running Task: T44
+    Core2:
+       Running Task: IDLE
+
+next start time for T31 is : 15
+--------------------
+Time: 8
+Sub1:
+    Resources: R1: 0, R2: 1
+    Waiting Queue:[T14,T17,T19]
+    Core1:
+       Running Task:T12
+       Ready Queue: []
+    Core2:
+       Running Task:T15
+       Ready Queue: [T18]
+    Core3:
+       Running Task:T13
+       Ready Queue: [T16]
+
+Sub2:
+    Resources: R1: 2, R2: 0
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T21
+    Core2:
+       Running Task: T24
+
+Sub3 at sub time 1:
+    Resources: R1: 0, R2: 1
+   Ready Queue:Ready Queue: [T33]
+    Core1:
+       Running Task: T31
+Sub3 at sub time 2:
+    Resources: R1: 0, R2: 1
+   Ready Queue:Ready Queue: [T33]
+    Core1:
+       Running Task: T31
+
+Sub4:
+   Resources: R1 1, R2: 3
+   Waiting Queue:[T46,T41,T42,T43]
+    Ready Queue: []
+    Core1:
+       Running Task: T44
+    Core2:
+       Running Task: IDLE
+
+next start time for T33 is : 16
+--------------------
+Time: 9
+Sub1:
+    Resources: R1: 0, R2: 1
+    Waiting Queue:[T14,T17,T19]
+    Core1:
+       Running Task:T12
+       Ready Queue: []
+    Core2:
+       Running Task:T15
+       Ready Queue: [T18]
+    Core3:
+       Running Task:T13
+       Ready Queue: [T16]
+
+Sub2:
+    Resources: R1: 2, R2: 0
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T21
+    Core2:
+       Running Task: T24
+
+Sub3 at sub time 1:
+    Resources: R1: 2, R2: 0
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T33
+Sub3 at sub time 2:
+    Resources: R1: 7, R2: 6
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: IDLE
+
+Sub4:
+   Resources: R1 1, R2: 2
+   Waiting Queue:[T46,T41,T43]
+    Ready Queue: []
+    Core1:
+       Running Task: T42
+    Core2:
+       Running Task: IDLE
+
+--------------------
+Time: 10
+Sub1:
+    Resources: R1: 1, R2: 0
+    Waiting Queue:[T14,T17,T19,T15,T12,T16]
+    Core1:
+       Running Task:T18
+       Ready Queue: []
+    Core2:
+       Running Task:IDLE
+       Ready Queue: []
+    Core3:
+       Running Task:T13
+       Ready Queue: []
+
+Sub2:
+    Resources: R1: 2, R2: 0
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T21
+    Core2:
+       Running Task: T24
+
+Sub3 at sub time 1:
+    Resources: R1: 7, R2: 6
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: IDLE
+Sub3 at sub time 2:
+    Resources: R1: 7, R2: 6
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: IDLE
+
+Sub4:
+   Resources: R1 1, R2: 2
+   Waiting Queue:[T46,T41,T43,T45]
+    Ready Queue: []
+    Core1:
+       Running Task: T42
+    Core2:
+       Running Task: IDLE
+
+--------------------
+Time: 11
+Sub1:
+    Resources: R1: 1, R2: 0
+    Waiting Queue:[T14,T17,T19,T15,T12,T16]
+    Core1:
+       Running Task:T18
+       Ready Queue: []
+    Core2:
+       Running Task:IDLE
+       Ready Queue: []
+    Core3:
+       Running Task:T13
+       Ready Queue: []
+
+Sub2:
+    Resources: R1: 2, R2: 0
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T21
+    Core2:
+       Running Task: T24
+
+Sub3 at sub time 1:
+    Resources: R1: 7, R2: 6
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: IDLE
+Sub3 at sub time 2:
+    Resources: R1: 7, R2: 6
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: IDLE
+
+Sub4:
+   Resources: R1 1, R2: 2
+   Waiting Queue:[T46,T41,T43,T45]
+    Ready Queue: []
+    Core1:
+       Running Task: T42
+    Core2:
+       Running Task: IDLE
+
+T42 failed at time 12 in core 1
+--------------------
+Time: 12
+Sub1:
+    Resources: R1: 1, R2: 0
+    Waiting Queue:[T14,T17,T19,T15,T12,T16]
+    Core1:
+       Running Task:T18
+       Ready Queue: []
+    Core2:
+       Running Task:IDLE
+       Ready Queue: []
+    Core3:
+       Running Task:T13
+       Ready Queue: []
+
+Sub2:
+    Resources: R1: 2, R2: 0
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T21
+    Core2:
+       Running Task: T24
+
+Sub3 at sub time 1:
+    Resources: R1: 7, R2: 6
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: IDLE
+Sub3 at sub time 2:
+    Resources: R1: 7, R2: 6
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: IDLE
+
+Sub4:
+   Resources: R1 1, R2: 2
+   Waiting Queue:[T46,T41,T43,T45]
+    Ready Queue: []
+    Core1:
+       Running Task: T42
+    Core2:
+       Running Task: IDLE
+
+--------------------
+Time: 13
+Sub1:
+    Resources: R1: 0, R2: 0
+    Waiting Queue:[T17,T19,T12,T16,T13,T18]
+    Core1:
+       Running Task:T14
+       Ready Queue: []
+    Core2:
+       Running Task:T15
+       Ready Queue: []
+    Core3:
+       Running Task:IDLE
+       Ready Queue: []
+
+Sub2:
+    Resources: R1: 2, R2: 0
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T21
+    Core2:
+       Running Task: T24
+
+Sub3 at sub time 1:
+    Resources: R1: 5, R2: 3
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T32
+Sub3 at sub time 2:
+    Resources: R1: 5, R2: 3
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T32
+
+Sub4:
+   Resources: R1 1, R2: 2
+   Waiting Queue:[T46,T41,T43,T45]
+    Ready Queue: []
+    Core1:
+       Running Task: T42
+    Core2:
+       Running Task: IDLE
+
+next start time for T32 is : 21
+--------------------
+Time: 14
+Sub1:
+    Resources: R1: 0, R2: 0
+    Waiting Queue:[T17,T19,T12,T16,T13,T18]
+    Core1:
+       Running Task:T14
+       Ready Queue: []
+    Core2:
+       Running Task:T15
+       Ready Queue: []
+    Core3:
+       Running Task:IDLE
+       Ready Queue: []
+
+Sub2:
+    Resources: R1: 2, R2: 0
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T21
+    Core2:
+       Running Task: T24
+
+Sub3 at sub time 1:
+    Resources: R1: 5, R2: 3
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T32
+Sub3 at sub time 2:
+    Resources: R1: 5, R2: 3
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T32
+
+Sub4:
+   Resources: R1 1, R2: 2
+   Waiting Queue:[T46,T41,T43,T45]
+    Ready Queue: []
+    Core1:
+       Running Task: T42
+    Core2:
+       Running Task: IDLE
+
+--------------------
+Time: 15
+Sub1:
+    Resources: R1: 0, R2: 0
+    Waiting Queue:[T17,T19,T12,T16,T13,T18]
+    Core1:
+       Running Task:T14
+       Ready Queue: []
+    Core2:
+       Running Task:T15
+       Ready Queue: []
+    Core3:
+       Running Task:IDLE
+       Ready Queue: []
+
+Sub2:
+    Resources: R1: 4, R2: 2
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T21
+    Core2:
+       Running Task: IDLE
+
+Sub3 at sub time 1:
+    Resources: R1: 0, R2: 1
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T31
+Sub3 at sub time 2:
+    Resources: R1: 0, R2: 1
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T31
+
+Sub4:
+   Resources: R1 1, R2: 2
+   Waiting Queue:[T46,T41,T43,T45]
+    Ready Queue: []
+    Core1:
+       Running Task: T42
+    Core2:
+       Running Task: IDLE
+
+--------------------
+Time: 16
+Sub1:
+    Resources: R1: 0, R2: 2
+    Waiting Queue:[T19,T13,T18]
+    Core1:
+       Running Task:T17
+       Ready Queue: [T14]
+    Core2:
+       Running Task:T12
+       Ready Queue: [T15]
+    Core3:
+       Running Task:T16
+       Ready Queue: []
+
+Sub2 is finished
+Sub3 at sub time 1:
+    Resources: R1: 0, R2: 0
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T33
+Sub3 at sub time 2:
+    Resources: R1: 0, R2: 0
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T33
+
+Sub4:
+   Resources: R1 2, R2: 2
+   Waiting Queue:[T46,T41,T43,T45]
+    Ready Queue: []
+    Core1:
+       Running Task: T42
+    Core2:
+       Running Task: IDLE
+
+next start time for T33 is : 26
+--------------------
+Time: 17
+Sub1:
+    Resources: R1: 0, R2: 2
+    Waiting Queue:[T19,T13,T18]
+    Core1:
+       Running Task:T17
+       Ready Queue: [T14]
+    Core2:
+       Running Task:T12
+       Ready Queue: [T15]
+    Core3:
+       Running Task:T16
+       Ready Queue: []
+
+Sub2 is finished
+Sub3 at sub time 1:
+    Resources: R1: 0, R2: 0
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T33
+Sub3 at sub time 2:
+    Resources: R1: 5, R2: 6
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: IDLE
+
+Sub4:
+   Resources: R1 2, R2: 1
+   Waiting Queue:[T46,T45,T43]
+    Ready Queue: []
+    Core1:
+       Running Task: T41
+    Core2:
+       Running Task: IDLE
+
+--------------------
+Time: 18
+Sub1:
+    Resources: R1: 0, R2: 2
+    Waiting Queue:[T19,T13,T18]
+    Core1:
+       Running Task:T17
+       Ready Queue: [T14]
+    Core2:
+       Running Task:T12
+       Ready Queue: [T15]
+    Core3:
+       Running Task:T16
+       Ready Queue: []
+
+Sub2 is finished
+Sub3 at sub time 1:
+    Resources: R1: 5, R2: 6
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: IDLE
+Sub3 at sub time 2:
+    Resources: R1: 5, R2: 6
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: IDLE
+
+Sub4:
+   Resources: R1 2, R2: 1
+   Waiting Queue:[T46,T45,T43]
+    Ready Queue: []
+    Core1:
+       Running Task: T41
+    Core2:
+       Running Task: IDLE
+
+--------------------
+Time: 19
+Sub1:
+    Resources: R1: 1, R2: 0
+    Waiting Queue:[T19,T13,T16,T14,T15,T12]
+    Core1:
+       Running Task:T17
+       Ready Queue: []
+    Core2:
+       Running Task:T18
+       Ready Queue: []
+    Core3:
+       Running Task:IDLE
+       Ready Queue: []
+
+Sub2 is finished
+Sub3 at sub time 1:
+    Resources: R1: 5, R2: 6
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: IDLE
+Sub3 at sub time 2:
+    Resources: R1: 5, R2: 6
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: IDLE
+
+Sub4:
+   Resources: R1 1, R2: 4
+   Waiting Queue:[T46,T45]
+    Ready Queue: []
+    Core1:
+       Running Task: T43
+    Core2:
+       Running Task: IDLE
+
+--------------------
+Time: 20
+Sub1:
+    Resources: R1: 2, R2: 0
+    Waiting Queue:[T19,T16,T14,T15,T12,T17]
+    Core1:
+       Running Task:IDLE
+       Ready Queue: []
+    Core2:
+       Running Task:T18
+       Ready Queue: []
+    Core3:
+       Running Task:T13
+       Ready Queue: []
+
+Sub2 is finished
+Sub3 at sub time 1:
+    Resources: R1: 5, R2: 6
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: IDLE
+Sub3 at sub time 2:
+    Resources: R1: 5, R2: 6
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: IDLE
+
+Sub4:
+   Resources: R1 1, R2: 4
+   Waiting Queue:[T46,T45]
+    Ready Queue: []
+    Core1:
+       Running Task: T43
+    Core2:
+       Running Task: IDLE
+
+--------------------
+Time: 21
+Sub1:
+    Resources: R1: 2, R2: 0
+    Waiting Queue:[T19,T16,T14,T15,T12,T17]
+    Core1:
+       Running Task:IDLE
+       Ready Queue: []
+    Core2:
+       Running Task:T18
+       Ready Queue: []
+    Core3:
+       Running Task:T13
+       Ready Queue: []
+
+Sub2 is finished
+Sub3 at sub time 1:
+    Resources: R1: 3, R2: 3
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T32
+Sub3 at sub time 2:
+    Resources: R1: 3, R2: 3
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T32
+
+Sub4:
+   Resources: R1 1, R2: 4
+   Waiting Queue:[T46,T45]
+    Ready Queue: []
+    Core1:
+       Running Task: T43
+    Core2:
+       Running Task: IDLE
+
+next start time for T32 is : 29
+--------------------
+Time: 22
+Sub1:
+    Resources: R1: 0, R2: 1
+    Waiting Queue:[T19,T16,T15,T17]
+    Core1:
+       Running Task:T14
+       Ready Queue: []
+    Core2:
+       Running Task:T12
+       Ready Queue: [T18]
+    Core3:
+       Running Task:T13
+       Ready Queue: []
+
+Sub2 is finished
+Sub3 at sub time 1:
+    Resources: R1: 3, R2: 3
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T32
+Sub3 at sub time 2:
+    Resources: R1: 3, R2: 3
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T32
+
+Sub4:
+   Resources: R1 1, R2: 4
+   Waiting Queue:[T46,T45]
+    Ready Queue: []
+    Core1:
+       Running Task: T43
+    Core2:
+       Running Task: IDLE
+
+--------------------
+Time: 23
+Sub1:
+    Resources: R1: 1, R2: 0
+    Waiting Queue:[T16,T17,T14,T18]
+    Core1:
+       Running Task:IDLE
+       Ready Queue: []
+    Core2:
+       Running Task:T15
+       Ready Queue: []
+    Core3:
+       Running Task:T19
+       Ready Queue: []
+
+Sub2 is finished
+Sub3 at sub time 1:
+    Resources: R1: 5, R2: 6
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: IDLE
+Sub3 at sub time 2:
+    Resources: R1: 5, R2: 6
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: IDLE
+
+Sub4:
+   Resources: R1 1, R2: 4
+   Waiting Queue:[T46,T45]
+    Ready Queue: []
+    Core1:
+       Running Task: T43
+    Core2:
+       Running Task: IDLE
+
+--------------------
+Time: 24
+Sub1:
+    Resources: R1: 1, R2: 0
+    Waiting Queue:[T16,T17,T14,T18]
+    Core1:
+       Running Task:IDLE
+       Ready Queue: []
+    Core2:
+       Running Task:T15
+       Ready Queue: []
+    Core3:
+       Running Task:T19
+       Ready Queue: []
+
+Sub2 is finished
+Sub3 at sub time 1:
+    Resources: R1: 5, R2: 6
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: IDLE
+Sub3 at sub time 2:
+    Resources: R1: 5, R2: 6
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: IDLE
+
+Sub4:
+   Resources: R1 1, R2: 4
+   Waiting Queue:[T46,T45]
+    Ready Queue: []
+    Core1:
+       Running Task: T43
+    Core2:
+       Running Task: IDLE
+
+--------------------
+Time: 25
+Sub1:
+    Resources: R1: 1, R2: 0
+    Waiting Queue:[T16,T17,T14,T18]
+    Core1:
+       Running Task:IDLE
+       Ready Queue: []
+    Core2:
+       Running Task:T15
+       Ready Queue: []
+    Core3:
+       Running Task:T19
+       Ready Queue: []
+
+Sub2 is finished
+Sub3 at sub time 1:
+    Resources: R1: 5, R2: 6
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: IDLE
+Sub3 at sub time 2:
+    Resources: R1: 5, R2: 6
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: IDLE
+
+Sub4:
+   Resources: R1 1, R2: 4
+   Waiting Queue:[T46,T45]
+    Ready Queue: []
+    Core1:
+       Running Task: T43
+    Core2:
+       Running Task: IDLE
+
+--------------------
+Time: 26
+Sub1:
+    Resources: R1: 1, R2: 0
+    Waiting Queue:[T16,T14,T19,T15]
+    Core1:
+       Running Task:IDLE
+       Ready Queue: []
+    Core2:
+       Running Task:T18
+       Ready Queue: []
+    Core3:
+       Running Task:T17
+       Ready Queue: []
+
+Sub2 is finished
+Sub3 at sub time 1:
+    Resources: R1: 0, R2: 0
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T33
+Sub3 at sub time 2:
+    Resources: R1: 0, R2: 0
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T33
+
+Sub4:
+   Resources: R1 4, R2: 1
+   Waiting Queue:[T46]
+    Ready Queue: []
+    Core1:
+       Running Task: T45
+    Core2:
+       Running Task: IDLE
+
+--------------------
+Time: 27
+Sub1:
+    Resources: R1: 0, R2: 2
+    Waiting Queue:[T16,T14,T19]
+    Core1:
+       Running Task:IDLE
+       Ready Queue: []
+    Core2:
+       Running Task:T15
+       Ready Queue: []
+    Core3:
+       Running Task:T17
+       Ready Queue: []
+
+Sub2 is finished
+Sub3 at sub time 1:
+    Resources: R1: 0, R2: 0
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T33
+Sub3:
+    Resources: R1: 5, R2: 5
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: IDLE
+
+Sub4:
+   Resources: R1 4, R2: 1
+   Waiting Queue:[T46]
+    Ready Queue: []
+    Core1:
+       Running Task: T45
+    Core2:
+       Running Task: IDLE
+
+--------------------
+Time: 28
+Sub1:
+    Resources: R1: 0, R2: 3
+    Waiting Queue:[T14,T19]
+    Core1:
+       Running Task:IDLE
+       Ready Queue: []
+    Core2:
+       Running Task:T16
+       Ready Queue: []
+    Core3:
+       Running Task:T17
+       Ready Queue: []
+
+Sub2 is finished
+Sub3:
+    Resources: R1: 5, R2: 5
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: IDLE
+
+Sub4:
+   Resources: R1 4, R2: 1
+   Waiting Queue:[T46]
+    Ready Queue: []
+    Core1:
+       Running Task: T45
+    Core2:
+       Running Task: IDLE
+
+--------------------
+Time: 29
+Sub1:
+    Resources: R1: 0, R2: 3
+    Waiting Queue:[T14,T19]
+    Core1:
+       Running Task:IDLE
+       Ready Queue: []
+    Core2:
+       Running Task:T16
+       Ready Queue: []
+    Core3:
+       Running Task:T17
+       Ready Queue: []
+
+Sub2 is finished
+Sub3:
+    Resources: R1: 3, R2: 2
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T32
+
+Sub4:
+   Resources: R1 4, R2: 1
+   Waiting Queue:[T46]
+    Ready Queue: []
+    Core1:
+       Running Task: T45
+    Core2:
+       Running Task: IDLE
+
+--------------------
+Time: 30
+Sub1:
+    Resources: R1: 0, R2: 0
+    Waiting Queue:[T17]
+    Core1:
+       Running Task:T14
+       Ready Queue: []
+    Core2:
+       Running Task:T19
+       Ready Queue: []
+    Core3:
+       Running Task:IDLE
+       Ready Queue: []
+
+Sub2 is finished
+Sub3:
+    Resources: R1: 3, R2: 2
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T32
+
+Sub4:
+   Resources: R1 4, R2: 1
+   Waiting Queue:[T46]
+    Ready Queue: []
+    Core1:
+       Running Task: T45
+    Core2:
+       Running Task: IDLE
+
+--------------------
+Time: 31
+Sub1:
+    Resources: R1: 0, R2: 0
+    Waiting Queue:[T17]
+    Core1:
+       Running Task:T14
+       Ready Queue: []
+    Core2:
+       Running Task:T19
+       Ready Queue: []
+    Core3:
+       Running Task:IDLE
+       Ready Queue: []
+
+Sub2 is finished
+Sub3:
+    Resources: R1: 3, R2: 2
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T32
+
+Sub4:
+   Resources: R1 3, R2: 3
+   Waiting Queue:[]
+    Ready Queue: []
+    Core1:
+       Running Task: T46
+    Core2:
+       Running Task: IDLE
+
+--------------------
+Time: 32
+Sub1:
+    Resources: R1: 2, R2: 2
+    Waiting Queue:[T17]
+    Core1:
+       Running Task:IDLE
+       Ready Queue: []
+    Core2:
+       Running Task:T19
+       Ready Queue: []
+    Core3:
+       Running Task:IDLE
+       Ready Queue: []
+
+Sub2 is finished
+Sub3:
+    Resources: R1: 3, R2: 2
+   Ready Queue:Ready Queue: []
+    Core1:
+       Running Task: T32
+
+Sub4:
+   Resources: R1 3, R2: 3
+   Waiting Queue:[]
+    Ready Queue: []
+    Core1:
+       Running Task: T46
+    Core2:
+       Running Task: IDLE
+
+--------------------
+Time: 33
+Sub1:
+    Resources: R1: 1, R2: 4
+    Waiting Queue:[T19]
+    Core1:
+       Running Task:T17
+       Ready Queue: []
+    Core2:
+       Running Task:IDLE
+       Ready Queue: []
+    Core3:
+       Running Task:IDLE
+       Ready Queue: []
+
+Sub2 is finished
+Sub3 is finished
+Sub4:
+   Resources: R1 3, R2: 3
+   Waiting Queue:[]
+    Ready Queue: []
+    Core1:
+       Running Task: T46
+    Core2:
+       Running Task: IDLE
+
+--------------------
+Time: 34
+Sub1:
+    Resources: R1: 1, R2: 4
+    Waiting Queue:[T19]
+    Core1:
+       Running Task:T17
+       Ready Queue: []
+    Core2:
+       Running Task:IDLE
+       Ready Queue: []
+    Core3:
+       Running Task:IDLE
+       Ready Queue: []
+
+Sub2 is finished
+Sub3 is finished
+Sub4:
+   Resources: R1 3, R2: 3
+   Waiting Queue:[]
+    Ready Queue: []
+    Core1:
+       Running Task: T46
+    Core2:
+       Running Task: IDLE
+
+--------------------
+Time: 35
+Sub1:
+    Resources: R1: 1, R2: 4
+    Waiting Queue:[T19]
+    Core1:
+       Running Task:T17
+       Ready Queue: []
+    Core2:
+       Running Task:IDLE
+       Ready Queue: []
+    Core3:
+       Running Task:IDLE
+       Ready Queue: []
+
+Sub2 is finished
+Sub3 is finished
+Sub4 is finished
+--------------------
+Time: 36
+Sub1:
+    Resources: R1: 1, R2: 4
+    Waiting Queue:[T19]
+    Core1:
+       Running Task:T17
+       Ready Queue: []
+    Core2:
+       Running Task:IDLE
+       Ready Queue: []
+    Core3:
+       Running Task:IDLE
+       Ready Queue: []
+
+Sub2 is finished
+Sub3 is finished
+Sub4 is finished
+--------------------
+Time: 37
+Sub1:
+    Resources: R1: 2, R2: 2
+    Waiting Queue:[]
+    Core1:
+       Running Task:T19
+       Ready Queue: []
+    Core2:
+       Running Task:IDLE
+       Ready Queue: []
+    Core3:
+       Running Task:IDLE
+       Ready Queue: []
+
+Sub2 is finished
+Sub3 is finished
+Sub4 is finished
+--------------------
+Time: 38
+Sub1:
+    Resources: R1: 2, R2: 2
+    Waiting Queue:[]
+    Core1:
+       Running Task:T19
+       Ready Queue: []
+    Core2:
+       Running Task:IDLE
+       Ready Queue: []
+    Core3:
+       Running Task:IDLE
+       Ready Queue: []
+
+Sub2 is finished
+Sub3 is finished
+Sub4 is finished
+--------------------
+Time: 39
+Sub1:
+    Resources: R1: 2, R2: 2
+    Waiting Queue:[]
+    Core1:
+       Running Task:T19
+       Ready Queue: []
+    Core2:
+       Running Task:IDLE
+       Ready Queue: []
+    Core3:
+       Running Task:IDLE
+       Ready Queue: []
+
+Sub2 is finished
+Sub3 is finished
+Sub4 is finished
+Sub1 Resources: R1=4 R2=4
+Sub2 Resources: R1=6 R2=6
+Sub3 Resources: R1=5 R2=5
+Sub4 Resources: R1=4 R2=4
+all systems are finished
+T11: arrived at 0, ended at 6, ran in [ 0 to 6 in core 1 ], no time in waiting queue
+T12: arrived at 1, ended at 22, ran in [ 1 to 3 in core 2, 7 to 9 in core 1, 16 to 18 in core 2, 22 to 22 in core 2 ], total time in waiting queue: 9, appeared in waiting in [ 10 to 15, 19 to 21 ]
+T13: arrived at 2, ended at 22, ran in [ 2 to 6 in core 3, 8 to 12 in core 3, 20 to 22 in core 3 ], total time in waiting queue: 7, appeared in waiting in [ 13 to 19 ]
+T14: arrived at 2, ended at 31, ran in [ 13 to 15 in core 1, 22 to 22 in core 1, 30 to 31 in core 1 ], total time in waiting queue: 19, appeared in waiting in [ 4 to 12, 19 to 21, 23 to 29 ]
+T15: arrived at 3, ended at 27, ran in [ 7 to 9 in core 2, 13 to 15 in core 2, 23 to 25 in core 2, 27 to 27 in core 2 ], total time in waiting queue: 8, appeared in waiting in [ 10 to 12, 19 to 22, 26 to 26 ]
+T16: arrived at 2, ended at 29, ran in [ 7 to 7 in core 3, 16 to 18 in core 3, 28 to 29 in core 2 ], total time in waiting queue: 15, appeared in waiting in [ 10 to 15, 19 to 27 ]
+T17: arrived at 4, ended at 36, ran in [ 16 to 19 in core 1, 26 to 29 in core 3, 33 to 36 in core 1 ], total time in waiting queue: 19, appeared in waiting in [ 6 to 15, 20 to 25, 30 to 32 ]
+T18: arrived at 1, ended at 26, ran in [ 4 to 6 in core 2, 10 to 12 in core 1, 19 to 21 in core 2, 26 to 26 in core 2 ], total time in waiting queue: 12, appeared in waiting in [ 1 to 3, 13 to 18, 23 to 25 ]
+T19: arrived at 2, ended at 39, ran in [ 23 to 25 in core 3, 30 to 32 in core 2, 37 to 39 in core 1 ], total time in waiting queue: 23, appeared in waiting in [ 8 to 22, 26 to 29, 33 to 36 ]
+T21: arrived at 5, ended at 15, ran in [ 8 to 15 in core 1 ], didn't stall
+T22: arrived at 1, ended at 6, ran in [ 1 to 1 in core 1, 4 to 6 in core 2 ], total time stalled: 2, stalled in [ 2 to 3 in core 2 ]
+T23: arrived at 2, ended at 3, ran in [ 2 to 3 in core 1 ], didn't stall
+T24: arrived at 3, ended at 14, ran in [ 7 to 14 in core 2 ], didn't stall
+T25: arrived at 5, ended at 7, ran in [ 5 to 7 in core 1 ], didn't stall
+T26: arrived at 4, ended at 4, ran in [ 4 to 4 in core 1 ], didn't stall
+T31: arrived at 15, ended at 0, ran in [ 1.1 to 1.1 in core 1, 1.2 to 1.2 in core 1, 8.1 to 8.2 in core 1, 15.1 to 15.2 in core 1 ]
+T32: arrived at 29, ended at 0, ran in [ 5.1 to 5.1 in core 1, 5.2 to 5.2 in core 1, 6.1 to 6.1 in core 1, 6.2 to 6.2 in core 1, 13.1 to 13.2 in core 1, 14.1 to 14.2 in core 1, 21.1 to 21.1 in core 1, 21.2 to 21.2 in core 1, 22.1 to 22.1 in core 1, 22.2 to 22.2 in core 1, 29.0 to 32.0 in core 1 ]
+T33: arrived at 26, ended at 0, ran in [ 7.1 to 7.1 in core 1, 7.2 to 7.2 in core 1, 9.1 to 9.1 in core 1, 16.1 to 16.1 in core 1, 16.2 to 16.2 in core 1, 17.1 to 17.1 in core 1, 26.1 to 26.1 in core 1, 26.2 to 26.2 in core 1, 27.1 to 27.1 in core 1 ]
+T41: arrived at 5, ended at 18, ran from 17 to 18 by core 1, failed 0 time, total time in waiting queue: 12, waited in [5 to 16]
+T42: arrived at 7, ended at 16, ran from 9 to 16 by core 1, failed 1 time, total time in waiting queue: 2, waited in [7 to 8]
+T43: arrived at 8, ended at 25, ran from 19 to 25 by core 1, failed 0 time, total time in waiting queue: 11, waited in [8 to 18]
+T44: arrived at 6, ended at 8, ran from 6 to 8 by core 1, failed 0 time, no waiting time
+T45: arrived at 10, ended at 30, ran from 26 to 30 by core 1, failed 0 time, total time in waiting queue: 16, waited in [10 to 25]
+T46: arrived at 4, ended at 34, ran from 31 to 34 by core 1, failed 0 time, total time in waiting queue: 27, waited in [4 to 30]

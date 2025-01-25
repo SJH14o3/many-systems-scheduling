@@ -1,3 +1,10 @@
+# Many Systems Scheduling
+A Operating Systems lecture project
+by Sajjad Jalili and Ali Ahmadi Moghadam.
+
+In this process we have 4 sub systems that have different scheduling algorithm and also each system has a CPU that might have multiple cores (we simulate each core and system as a thread). we receives some tasks at the start of program and simulate scheduling.
+here is an explanation of each subsystem:
+
 ## Subsystem 1
 This system has 3 cores, Ready queue for each core and a Waiting queue. scheduler for this system uses weighted round-robin. before system runs cores it would assign each task a quantum based of it's burst time. minimum burst time gets one time unit as quantum and the maximum burst time get the highest quantum that can be adjusted in function setQuantums. also system is a soft affinity meaning we must let the task run in their desired core.
 ### how does it work?
@@ -29,12 +36,15 @@ if task is allocated successfully, then it will be run for one time unit.
 if remain time of task reaches 0, it will be deallocated be removed from the core.
 system will be finished when all task are finished.
 
-## Subsystem 3
+##Subsystem 3
+This system has one core, one Ready queue and no Waiting queue. this is a hard real time system and scheduler uses Rate Monotonic.
+In this system, a special case for this system is that even though we have one core, a process might need more resources that this system has and we need to lend resources from other systems. we determines the max needed R1 and R2 and lend the needed resources from other systems in a circular manner by picking 1 resource at a time. we do this at the start because there is a possibility that maybe not enough resources are available to lend, we do this at the start of program before allocating any task. when we don't need the additional resource, we return it to the original system. when system has got additional resources, it would run twice as other system, we call it overclock state. we simulate the core running for a time unit twice in that state. it goes back to normal when resources are returned. the ready queue is prioritized by period length.
 
-### how does it work?
+###how does it work?
+first in every time unit, we check if new process has arrived and we add it to ready queue. if there wasn't a running task we assign one from ready queue. if core was running we check if top of queue has a higher priority than current task and bring the top to the core if the condition is met. if there is a assigned task, thankfully we don't need to worry about resources on this system. we would run the assigned task and if it's done if it must be ran again we bring it back to the not-Arrived-Tasks list with a new arrival time. system is finished when tasks have ran for the amount they needed to be run.
 
 ## Subsystem 4
-This system has 2 cores, a Ready queue a Waiting queue. scheduler for this system uses FCFS. In this system, some task has a prerequisite and if their prerequisite is not finished, they cannot run.
+This system has 2 cores, a Ready queue a Waiting queue. scheduler for this system uses first comes, first served. In this system, some task has a prerequisite and if their prerequisite is not finished, they cannot run.
 
 ### how does it work?
 first in every time unit, sub system will check if new processes have arrived, if there are, they will be added to the ready queue if their prerequisite is complete
@@ -42,3 +52,6 @@ if not it will be added to waiting queue instead. both queues use a priority que
 [note that for allocating for this system we added a function that would check if task can be assigned and if it can, it will be allocated there, the whole process is inside a synchronized block]
 if core is not idle then it would run for a time unit since task is already allocated.
 if a core is idle, it will get a process from ready queue by polling a process as long as a process can be allocated or queue get's empty. all the removed processes that could not be allocated will be moved to waiting queue. if we could poll a process from ready queue we check waiting queue. we clone it's priority queue first then start polling out processes until a process that can be allocated and it's prerequisite is finished is found. if no such process is found then core will be idle. if we have a process then it will ran until is finished. when is finished, all of the task that had the finished task as prerequisite will come back to ready queue. system will finished when all tasks are done and no new task is coming and queues are empty.
+
+# How to Run
+download the repository and run Main class. use in.txt as a sample input.
