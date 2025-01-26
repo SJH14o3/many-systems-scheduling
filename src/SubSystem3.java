@@ -10,6 +10,8 @@ public final class SubSystem3 extends SubSystem {
     private int maxR1;
     private int maxR2;
     private final System3Core[] core;
+    private final int originalR1;
+    private final int originalR2;
 
     public SubSystem3ReadyQueue subSystem3ReadyQueue;
     private final LinkedList<Resource> resource1;
@@ -31,6 +33,8 @@ public final class SubSystem3 extends SubSystem {
         for (Process process : processes) {
             notArrivedQueue.add((ProcessSubSystem3) process);
         }
+        originalR1 = intR1Remain;
+        originalR2 = intR2Remain;
     }
 
     public void sortProcessesByResources(Process[] processes) {
@@ -126,7 +130,13 @@ public final class SubSystem3 extends SubSystem {
         sortedByR2.remove(process);
         LinkedList<Resource> lendBackResources = new LinkedList<>();
         if (!resource1.isEmpty()) {
-            int newMaxR1 = sortedByR1.get(0).maxR1;
+            int newMaxR1;
+            if (sortedByR1.isEmpty()) {
+                newMaxR1 = originalR1;
+            }
+            else {
+                newMaxR1 = sortedByR1.get(0).maxR1;
+            }
             if (maxR1 > newMaxR1) {
                 for (; newMaxR1 != maxR1; maxR1--) {
                     if (resource1.isEmpty()) {
@@ -138,7 +148,13 @@ public final class SubSystem3 extends SubSystem {
             }
         }
         if (!resource2.isEmpty()) {
-            int newMaxR2 = sortedByR2.get(0).maxR2;
+            int newMaxR2;
+            if (sortedByR2.isEmpty()) {
+                newMaxR2 = originalR2;
+            }
+            else {
+                newMaxR2 = sortedByR2.get(0).maxR2;
+            }
             if (maxR2 > newMaxR2) {
                 for (; newMaxR2 != maxR2; maxR2--) {
                     if (resource2.isEmpty()) {
