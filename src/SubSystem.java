@@ -22,16 +22,6 @@ public abstract class SubSystem extends Thread{
     public final int CORE_COUNT;
 
     protected final ArrayList<Process> notArrivedProcesses;
-
-
-    public Process getProcessWithName(String name){
-        for (Process process: notArrivedProcesses){
-            if (process.getName().equals(name)){
-                return process;
-            }
-        }
-        return null;
-    }
     protected final boolean dontSendReport;
 
 
@@ -46,10 +36,6 @@ public abstract class SubSystem extends Thread{
 
     public int getR2Remain() {
         return R2Remain;
-    }
-
-    public int getSystemState() {
-        return systemState;
     }
 
     public void setSystemState(int systemState) {

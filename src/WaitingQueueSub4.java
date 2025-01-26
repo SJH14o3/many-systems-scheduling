@@ -59,21 +59,4 @@ public class WaitingQueueSub4 {
         }
         return Optional.ofNullable(out);
     }
-
-    // return of process that its prerequisite have been met by finish of input process to be added to ready queue
-    public void backToReadyQueue() {
-        LinkedList<ProcessSubSystem4> backToReadyQueue = new LinkedList<>();
-        synchronized (waitingList) {
-            Iterator<ProcessSubSystem4> iterator = waitingList.iterator();
-            while (iterator.hasNext()) {
-                ProcessSubSystem4 temp = iterator.next();
-                if (owner.isPrerequisiteDone(temp) && owner.checkEnoughResource(temp)) {
-                    temp.addWaitingEndStamp(owner.owner.time - 1);
-                    backToReadyQueue.add(temp);
-                    iterator.remove();
-                }
-            }
-        }
-        owner.readyQueue.addAllProcesses(backToReadyQueue);
-    }
 }

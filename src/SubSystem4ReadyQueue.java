@@ -41,7 +41,7 @@ public class SubSystem4ReadyQueue {
 
     /* this function will check if process is runnable first by checking if it's prerequisite is finished
     * and then checks if it can be allocated. if two conditions are met, inside checkAndAllocate function , it
-    * will be allocated. if any of the conditions are not met, it will be removed and it will be added to waiting queue*/
+    * will be allocated. if any of the conditions are not met, it will be removed, and it will be added to waiting queue*/
     public Optional<ProcessSubSystem4> getRunnableProcess() {
         ProcessSubSystem4 out = null;
         List<ProcessSubSystem4> addToWaitingQueue = new LinkedList<>();

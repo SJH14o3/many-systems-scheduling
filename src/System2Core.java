@@ -46,9 +46,6 @@ public class System2Core extends SystemCore {
                             // if task is allocated (not allocated means it was stalled), we need to deallocate it first
                             if (allocationState == ALLOCATION_STATE_ALLOCATED) {
                                 owner.deallocate(currentTask);
-                            } else {
-                                // adding a stalled time stamp
-                                //currentTask.addWaitingEndStamp(owner.owner.time, coreIndex+1);
                             }
                             currentTask = temp;
                             owner.allocate(currentTask); // throw an exception if not enough resources are available

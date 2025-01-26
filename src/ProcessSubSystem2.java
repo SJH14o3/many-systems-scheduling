@@ -1,6 +1,5 @@
 public final class ProcessSubSystem2 extends Process {
     private int remainingTime;
-    private boolean isStalled = false;
 
     public int getRemainingTime() {
         return remainingTime;
@@ -21,14 +20,6 @@ public final class ProcessSubSystem2 extends Process {
         remainingTime--;
         addRunningStartStamp(time, coreNum);
         return remainingTime == 0;
-    }
-
-    public boolean isStalledJustNow() {
-        if (!isStalled) {
-            isStalled = true;
-            return true;
-        }
-        return false;
     }
 
     @Override

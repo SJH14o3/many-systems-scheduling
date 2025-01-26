@@ -1,4 +1,3 @@
-import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -55,7 +54,7 @@ public final class SubSystem3 extends SubSystem {
     public void lendResource(){
         int neededR1 = (Math.max(maxR1 - R1Remain, 0));
         int neededR2 = (Math.max(maxR2-R2Remain,0));
-        LinkedList<Resource> resourceLinkedList = new LinkedList<>();
+        LinkedList<Resource> resourceLinkedList;
         resourceLinkedList = owner.lendResourceToSubsystem3(neededR1,neededR2);
         for (Resource resource: resourceLinkedList){
             if (resource.type() == 1){

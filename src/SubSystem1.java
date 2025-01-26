@@ -49,7 +49,7 @@ public final class SubSystem1 extends SubSystem {
         super(intR1Remain, intR2Remain, processSubSystem1, sys1CoresCount, doNotSendReport, 0);
         this.processSubSystem1 = processSubSystem1;
         setQuantums();
-        //printQs();
+        printQs();
         waitingQueue = new WaitingQueueSub1(this);
         cores = new System1Core[sys1CoresCount];
         for (int i = 0; i < sys1CoresCount; i++) {

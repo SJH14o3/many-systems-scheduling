@@ -7,14 +7,6 @@ public final class ProcessSubSystem3 extends Process {
         return period;
     }
 
-    public int getReoccurrence() {
-        return reoccurrence;
-    }
-
-    public void setReoccurrence(int reoccurrence) {
-        this.reoccurrence = reoccurrence;
-    }
-
     public boolean decrementReoccurrence() {
         reoccurrence--;
         return reoccurrence == 0;
@@ -115,9 +107,7 @@ public final class ProcessSubSystem3 extends Process {
 
     @Override
     public String getFinalReport() {
-        StringBuilder sb = new StringBuilder(reportStartingDetails());
-        sb.append(", ran in ");
-        sb.append(consecutiveDecoder(runningReport));
-        return sb.toString();
+        return reportStartingDetails() + ", ran in " +
+                consecutiveDecoder(runningReport);
     }
 }

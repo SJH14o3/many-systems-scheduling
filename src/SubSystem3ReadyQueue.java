@@ -4,7 +4,7 @@ import java.util.PriorityQueue;
 
 public class SubSystem3ReadyQueue {
     // since we only have one core, we don't need to synchronize
-    private PriorityQueue<ProcessSubSystem3> queue;
+    private final PriorityQueue<ProcessSubSystem3> queue;
 
     public SubSystem3ReadyQueue() {
         queue = new PriorityQueue<>(Comparator.comparingInt(ProcessSubSystem3::getPeriod));

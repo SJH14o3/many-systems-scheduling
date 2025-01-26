@@ -4,18 +4,10 @@ public abstract class Process {
     protected int maxR1;
     protected int maxR2;
     protected int startTime;
-    protected int state;
     protected int endTime;
     protected StringBuilder runningReport;
     protected StringBuilder waitingReport;
-
-
     protected int timeInWaitingQueue;
-
-
-    public static int STATE_READY = 0;
-    public static int STATE_RUNNING = 1;
-    public static int STATE_WAITING = 2;
 
 
     public String getName() {
@@ -38,18 +30,6 @@ public abstract class Process {
         return startTime;
     }
 
-    public int getTimeInWaitingQueue() {
-        return timeInWaitingQueue;
-    }
-
-    public void setTimeInWaitingQueue(int timeInWaitingQueue) {
-        this.timeInWaitingQueue = timeInWaitingQueue;
-    }
-
-    public int getEndTime() {
-        return endTime;
-    }
-
     public void setEndTime(int endTime) {
         this.endTime = endTime;
     }
@@ -64,16 +44,8 @@ public abstract class Process {
         waitingReport = new StringBuilder();
     }
 
-    public int[] getMaxResourcesAsArray() {
-        return new int[]{maxR1, maxR2};
-    }
-
     public void incrementWaitingTime() {
         timeInWaitingQueue++;
-    }
-
-    private String createPartialReportString(int start, int end , int core) {
-        return " " + start + " to " + end + " in core " + core;
     }
 
     public String consecutiveDecoder(StringBuilder in) {
@@ -176,9 +148,6 @@ public abstract class Process {
                 ", ended at " + endTime;
     }
 
-    public static Process createProcessWithString(String line) {
-        return null;
-    }
     public abstract void addRunningStartStamp(int time);
     public abstract void addRunningEndStamp(int time, int coreNumber);
     public abstract void addWaitingStartStamp(int time);

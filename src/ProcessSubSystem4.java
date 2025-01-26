@@ -1,12 +1,8 @@
 public final class ProcessSubSystem4 extends Process {
 
-    private String prerequisite;
+    private final String prerequisite;
     private int remainingTime;
     private int failedCount;
-
-    public int getRemainingTime() {
-        return remainingTime;
-    }
 
     public void setRemainingTime(int remainingTime) {
         this.remainingTime = remainingTime;
@@ -15,14 +11,6 @@ public final class ProcessSubSystem4 extends Process {
 
     public String getPrerequisite() {
         return prerequisite;
-    }
-
-    public void setPrerequisite(String prerequisite) {
-        this.prerequisite = prerequisite;
-    }
-
-    public int getFailedCount() {
-        return failedCount;
     }
 
     public void incrementFailedCount() {
